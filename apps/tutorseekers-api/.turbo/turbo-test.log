@@ -1,0 +1,10 @@
+warning package.json: No license field
+$ jest
+PASS __test__/cdk.test.ts
+  √ SQS Queue Created (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        4.835 s
+Ran all test suites.

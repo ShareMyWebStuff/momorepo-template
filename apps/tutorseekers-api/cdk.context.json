@@ -1,0 +1,11 @@
+{
+  "availability-zones:account=216211142709:region=eu-west-2": [
+    "eu-west-2a",
+    "eu-west-2b",
+    "eu-west-2c"
+  ],
+  "hosted-zone:account=216211142709:domainName=cameronguy.biz:region=eu-west-2": {
+    "Id": "/hostedzone/Z103405411XZ658HQMPKS",
+    "Name": "cameronguy.biz."
+  }
+}
