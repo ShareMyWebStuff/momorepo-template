@@ -17,9 +17,9 @@
     "turborepo": "^0.0.1"
   },
   "scripts": {
-    "frontend:build": "turbo run build --filter=tutorseekers",
+    "frontend:build": "turbo run build --filter=frontend",
     "backend:build": "turbo run build --filter=tutorseekers-api",
-    "frontend:run": "turbo run dev --filter=tutorseekers",
+    "frontend:run": "turbo run dev --filter=frontend",
     "backend:run": "turbo run build --filter=tutorseekers-api",
     "backend:deploy": "turbo run deploy --filter=tutorseekers-api",
     "backend:synth": "turbo run synth --filter=tutorseekers-api",

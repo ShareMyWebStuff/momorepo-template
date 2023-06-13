@@ -92,10 +92,9 @@ const main = async () => {
     const mainStack = new SetupStack( app, initialStackName, stackProps, buildConfig)
   }
 
-  // RENAME THIS TO VPC STACK
-  // if ( buildConfig.RunSetup){
-  //   let initialStackName = buildConfig.Prefix + '-setup'
-  //   const mainStack = new SetupStack( app, initialStackName, stackProps, buildConfig)
+  // if ( ['dev', 'stg', 'prd'].includes(buildConfig.Environment) ){
+  //   let initialStackName = buildConfig.Prefix + buildConfig.Environment + '-base-infrastructure'
+  //   const mainStack = new BaseInfrastureStack( app, initialStackName, stackProps, buildConfig)
   // }
 
 
