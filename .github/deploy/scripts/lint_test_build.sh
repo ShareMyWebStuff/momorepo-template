@@ -10,5 +10,5 @@ echo "--- 🚀 Run next build..."
 yarn run frontend:build
 
 # For now we only want the static bundle
-ls -la ./apps/tutorseekers
+ls -la 
 # zip -r build.zip out
