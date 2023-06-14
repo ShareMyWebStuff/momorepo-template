@@ -23,6 +23,10 @@ jobs:
         run: ls -ltr
       - name: Build Website and Zip
         run: ./.github/deploy/scripts/lint_test_build.sh
+      - uses: actions/upload-artifact@v2
+        with:
+          name: build.zip
+          path: build.zip
 
   # deploy:
   #   runs-on: ubuntu-latest

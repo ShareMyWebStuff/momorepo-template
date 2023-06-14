@@ -1,4 +1,6 @@
 
+https://github.com/tylangesmith-organisation/nextjs-serverless-static-site/tree/master/.github/deploy
+
 
 GHA Permission issue
 
