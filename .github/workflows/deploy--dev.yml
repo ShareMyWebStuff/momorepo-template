@@ -19,6 +19,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: "18.x"
+      - name: List
+        run: ls -ltr
       - name: Build Website and Zip
         run: ./.github/deploy/scripts/lint_test_build.sh
 
