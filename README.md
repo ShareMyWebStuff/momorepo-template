@@ -1,5 +1,12 @@
 
 
+GHA Permission issue
+
+git update-index --chmod=+x ./.github/deploy/scripts/lint_test_build.sh
+
+
+
+
 ## Hosting
 
 Before running this it is expected that a route 53 hosted zone has been created. This is used to create the domain name for the website. 
