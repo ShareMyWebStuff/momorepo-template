@@ -14,5 +14,5 @@ ls -la
 
 ls -la ./apps
 
-ls -la ./apps/tutorseekers
+ls -la ./apps/frontend
 # zip -r build.zip out
