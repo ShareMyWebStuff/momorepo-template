@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: "18.x"
       - name: Build Website and Zip
-        run: .github/deploy/scripts/lint_test_build.sh
+        run: ./.github/deploy/scripts/lint_test_build.sh
 
   # deploy:
   #   runs-on: ubuntu-latest
