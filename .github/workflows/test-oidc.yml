@@ -10,7 +10,7 @@ on:
 
 jobs:
     deploy:
-      name: Upload to Amazon S3
+      name: Load the baseline
       runs-on: ubuntu-latest
       # These permissions are needed to interact with GitHub's OIDC Token endpoint.
       permissions:
@@ -19,11 +19,19 @@ jobs:
       steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Install packages
+        run: |
+          yarn install
       - name: Configure AWS credentials from Test account
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: arn:aws:iam::216211142709:role/AWSOpenIdRole
           aws-region: us-west-2
+      - name: Run cdk
+        run: |
+            cd apps/tutorseekers-pi
+            cdk deploy -c setup=true --require-approval never
+            
     #   - name: Copy files to the test website with the AWS CLI
     #     run: |
     #       aws s3 sync . s3://my-s3-test-website-bucket

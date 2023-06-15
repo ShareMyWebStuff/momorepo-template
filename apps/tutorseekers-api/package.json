@@ -9,6 +9,7 @@
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk",
+    "deploy:base": "cdk deploy -c setup=true --require-approval never",
     "deploy": "cdk deploy -c config dev  --require-approval never",
     "deploy:local": "cdk deploy -c config=local --require-approval never",
     "deploy:dev": "cdk deploy --require-approval never",
