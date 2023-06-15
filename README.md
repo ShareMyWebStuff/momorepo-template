@@ -1,4 +1,6 @@
 
+https://tylangesmith.com/blog/building-a-nextjs-serverless-static-site-using-aws-cdk
+
 https://github.com/tylangesmith-organisation/nextjs-serverless-static-site/tree/master/.github/deploy
 
 
