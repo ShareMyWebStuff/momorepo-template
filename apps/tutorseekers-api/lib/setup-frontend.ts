@@ -38,10 +38,10 @@ export class SetupFrontendStack extends cdk.Stack {
 
     // 👇 define GET todos function
     const getTodosLambda = new lambda.Function(this, 'get-todos-lambda', {
-      functionName: 'html-mapper-dev',
+      // functionName: 'html-mapper-dev',
       runtime: lambda.Runtime.NODEJS_16_X,
       handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, '/src/HtmlMapperFn')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '/src/html-mapper-fn')),
     });
 
 
