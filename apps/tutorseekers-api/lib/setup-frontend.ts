@@ -41,7 +41,7 @@ export class SetupFrontendStack extends cdk.Stack {
       functionName: 'html-mapper-dev',
       runtime: lambda.Runtime.NODEJS_16_X,
       handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, './src/HtmlMapperFn')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '/src/HtmlMapperFn')),
     });
 
 
