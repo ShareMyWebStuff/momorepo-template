@@ -3,7 +3,7 @@ import { Construct } from 'constructs';
 import * as cm from 'aws-cdk-lib/aws-certificatemanager';
 import {BuildConfig} from './build-config'
 import { HostedZone } from 'aws-cdk-lib/aws-route53';
-import * as cloudfront from "@aws-cdk-lib/aws-cloudfront";
+// import * as cloudfront from "@aws-cdk-lib/aws-cloudfront";
 import { ApiGatewayDomain } from 'aws-cdk-lib/aws-route53-targets';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as iam from 'aws-cdk-lib/aws-iam';
@@ -50,128 +50,128 @@ export class SetupFrontendStack extends cdk.Stack {
     // const hostCert = cm.Certificate (this, "Certificate" );
 
     // Retrieve the certificate
-    const certificate = cm.Certificate.fromLookup(this, "Certificate", buildConfig.CertificateArn)
+    // const certificate = cm.Certificate.fromLookup(this, "Certificate", buildConfig.CertificateArn)
 
-    const cf = new cloudfront.Distribution(this, "Distribution", {
-
-
-
-    // Create lambda edge function
+    // const cf = new cloudfront.Distribution(this, "Distribution", {
 
 
 
-    export interface CreateFunctionProps {
-      scope: Stack;
-      functionName: string;
-      filePath: string;
-    }
+    // // Create lambda edge function
+
+
+
+    // export interface CreateFunctionProps {
+    //   scope: Stack;
+    //   functionName: string;
+    //   filePath: string;
+    // }
     
-    export const createFunction = (props: CreateFunctionProps): IFunction => {
-      const { scope, functionName, filePath } = props
+    // export const createFunction = (props: CreateFunctionProps): IFunction => {
+    //   const { scope, functionName, filePath } = props
     
-      return new Function(scope, 'mappingFunction', {
-        functionName,
-        code: FunctionCode.fromFile({
-          filePath
-        })
-      })
-    }
+    //   return new Function(scope, 'mappingFunction', {
+    //     functionName,
+    //     code: FunctionCode.fromFile({
+    //       filePath
+    //     })
+    //   })
+    // }
 
-    // With those few components now created we can now create our CloudFront
-    // distribution
-    // This allows for our static website content to be propogated across a CDN
-    // geographically closer to our users
-    const distribution = createDistribution({
-      scope: this,
-      bucket,
-      certificate,
-      url,
-      functionAssociation
-    })
+    // // With those few components now created we can now create our CloudFront
+    // // distribution
+    // // This allows for our static website content to be propogated across a CDN
+    // // geographically closer to our users
+    // const distribution = createDistribution({
+    //   scope: this,
+    //   bucket,
+    //   certificate,
+    //   url,
+    //   functionAssociation
+    // })
 
-    export interface CreateDistributionProps {
-      scope: Stack;
-      bucket: IBucket;
-      certificate: ICertificate;
-      url: string;
-      functionAssociation: IFunction;
-    }
+    // export interface CreateDistributionProps {
+    //   scope: Stack;
+    //   bucket: IBucket;
+    //   certificate: ICertificate;
+    //   url: string;
+    //   functionAssociation: IFunction;
+    // }
     
-    export const createDistribution = (props: CreateDistributionProps): IDistribution => {
-      const { scope, bucket, certificate, url, functionAssociation } = props
+    // export const createDistribution = (props: CreateDistributionProps): IDistribution => {
+    //   const { scope, bucket, certificate, url, functionAssociation } = props
     
-      return new Distribution(scope, 'distribution', {
-        domainNames: [url],
-        defaultBehavior: {
-          origin: new S3Origin(bucket),
-          functionAssociations: [
-            {
-              function: functionAssociation,
-              eventType: FunctionEventType.VIEWER_REQUEST
-            }
-          ]
-        },
-        certificate,
-        defaultRootObject: '/index.html',
-        errorResponses: [
-          {
-            httpStatus: 404,
-            responseHttpStatus: 404,
-            responsePagePath: '/404.html'
-          }
-        ]
-      })
+    //   return new Distribution(scope, 'distribution', {
+    //     domainNames: [url],
+    //     defaultBehavior: {
+    //       origin: new S3Origin(bucket),
+    //       functionAssociations: [
+    //         {
+    //           function: functionAssociation,
+    //           eventType: FunctionEventType.VIEWER_REQUEST
+    //         }
+    //       ]
+    //     },
+    //     certificate,
+    //     defaultRootObject: '/index.html',
+    //     errorResponses: [
+    //       {
+    //         httpStatus: 404,
+    //         responseHttpStatus: 404,
+    //         responsePagePath: '/404.html'
+    //       }
+    //     ]
+    //   })
 
-    // Create an A record entry in Route53 that points to our CloudFront distribution
-    // E.g. nextjs-serverless-static-site.tylangesmith.com ==> xyz.cloudfront.net
-    createARecordForDistribution({
-      scope: this,
-      hostedZone,
-      subDomainName,
-      distribution
-    })
+    // // Create an A record entry in Route53 that points to our CloudFront distribution
+    // // E.g. nextjs-serverless-static-site.tylangesmith.com ==> xyz.cloudfront.net
+    // createARecordForDistribution({
+    //   scope: this,
+    //   hostedZone,
+    //   subDomainName,
+    //   distribution
+    // })
 
-    export interface CreateARecordForDistributionProps {
-      scope: Stack;
-      hostedZone: IHostedZone;
-      subDomainName: string;
-      distribution: IDistribution;
-    }
+    // export interface CreateARecordForDistributionProps {
+    //   scope: Stack;
+    //   hostedZone: IHostedZone;
+    //   subDomainName: string;
+    //   distribution: IDistribution;
+    // }
     
-    export const createARecordForDistribution = (props: CreateARecordForDistributionProps): ARecord => {
-      const { scope, hostedZone, subDomainName, distribution } = props
+    // export const createARecordForDistribution = (props: CreateARecordForDistributionProps): ARecord => {
+    //   const { scope, hostedZone, subDomainName, distribution } = props
     
-      return new ARecord(scope, 'aRecord', {
-        target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
-        zone: hostedZone,
-        recordName: subDomainName
-      })
-    }
+    //   return new ARecord(scope, 'aRecord', {
+    //     target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
+    //     zone: hostedZone,
+    //     recordName: subDomainName
+    //   })
+    // }
 
-    // Finally let's deploy our static content to our S3 bucket
-    createBucketDeployment({
-      scope: this,
-      bucket,
-      distribution,
-      filePath: './out'
-    })
+    // // Finally let's deploy our static content to our S3 bucket
+    // createBucketDeployment({
+    //   scope: this,
+    //   bucket,
+    //   distribution,
+    //   filePath: './out'
+    // })
 
-    export interface CreateBucketDeploymentProps {
-      scope: Stack;
-      bucket: IBucket;
-      distribution: IDistribution;
-      filePath: string;
-    }
+    // export interface CreateBucketDeploymentProps {
+    //   scope: Stack;
+    //   bucket: IBucket;
+    //   distribution: IDistribution;
+    //   filePath: string;
+    // }
     
-    export const createBucketDeployment = (props: CreateBucketDeploymentProps): BucketDeployment => {
-      const { scope, bucket, distribution, filePath } = props
+    // export const createBucketDeployment = (props: CreateBucketDeploymentProps): BucketDeployment => {
+    //   const { scope, bucket, distribution, filePath } = props
     
-      return new BucketDeployment(scope, 'bucketDeployment', {
-        destinationBucket: bucket,
-        sources: [Source.asset(filePath)],
-        distribution
-      })
-    }
+    //   return new BucketDeployment(scope, 'bucketDeployment', {
+    //     destinationBucket: bucket,
+    //     sources: [Source.asset(filePath)],
+    //     distribution
+    //   })
+    // }
 
 
 
