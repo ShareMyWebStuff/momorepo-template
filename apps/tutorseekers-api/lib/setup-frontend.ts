@@ -62,13 +62,33 @@ export class SetupFrontendStack extends cdk.Stack {
       code: lambda.Code.fromAsset(path.join(__dirname, '/src/html-mapper-fn')),
     });
 
+    // const poo = cdk.aws_cloudfront.FunctionDefinitionVersion.fromFunctionArn(this, 'html-mapper-dev', htmlMapperFn.functionArn);
+    const wee = new cdk.aws_cloudfront.Function(
+      this,
+      'html-mapper-dev',
+      {
+        functionName: 'html-mapper-dev',
+        code: cdk.aws_cloudfront.FunctionCode.fromInline(
+          `function handler(event) {
+            var request = event.request;
+            var uri = request.uri;
+            console.log("URI: " + uri);
+            if (uri.endsWith('/')) {
+              request.uri += 'index.html';
+            } else if (!uri.includes('.')) {
+              request.uri += '/index.html';
+            }    
+            return request;
+          }`)
+      }
+    )
     const sf = new cdk.aws_cloudfront.Distribution(this, 'Distribution', {
       defaultBehavior: {
         origin: new cdk.aws_cloudfront_origins.S3Origin(deployBucket),
         viewerProtocolPolicy: cdk.aws_cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         functionAssociations: [
           {
-            function: htmlMapperFn,
+            function: wee,
             eventType: cdk.aws_cloudfront.FunctionEventType.VIEWER_REQUEST,
           },
         ],
