@@ -68,18 +68,21 @@ export class SetupFrontendStack extends cdk.Stack {
       'html-mapper-dev-wee',
       {
         functionName: 'html-mapper-dev-wee',
-        code: cdk.aws_cloudfront.FunctionCode.fromInline(
-          `function handler(event) {
-            var request = event.request;
-            var uri = request.uri;
-            console.log("URI: " + uri);
-            if (uri.endsWith('/')) {
-              request.uri += 'index.html';
-            } else if (!uri.includes('.')) {
-              request.uri += '/index.html';
-            }    
-            return request;
-          }`)
+        code: cdk.aws_cloudfront.FunctionCode.fromFile({
+          filePath: path.join(__dirname, '/src/html-mapper-fn/index.js'),
+        }),
+        // code: cdk.aws_cloudfront.FunctionCode.fromInline(
+        //   `function handler(event) {
+        //     var request = event.request;
+        //     var uri = request.uri;
+        //     console.log("URI: " + uri);
+        //     if (uri.endsWith('/')) {
+        //       request.uri += 'index.html';
+        //     } else if (!uri.includes('.')) {
+        //       request.uri += '/index.html';
+        //     }    
+        //     return request;
+        //   }`)
       }
     )
     const sf = new cdk.aws_cloudfront.Distribution(this, 'Distribution', {
@@ -93,16 +96,24 @@ export class SetupFrontendStack extends cdk.Stack {
           },
         ],
       },
-      // domainNames: [`www.${buildConfig.DomainName}`],
-      // certificate: cert,
-      // defaultRootObject: 'index.html',
-      // errorResponses: [
-      //   {
-      //     httpStatus: 404,
-      //     responseHttpStatus: 404,
-      //     responsePagePath: '/404.html',
-      //   },
-      // ],
+      domainNames: [`www.${buildConfig.DomainName}`],
+      certificate: cert,
+      defaultRootObject: 'index.html',
+      errorResponses: [
+        {
+          httpStatus: 404,
+          responseHttpStatus: 404,
+          responsePagePath: '/404.html',
+        },
+      ],
+    });
+
+    const cfRecord = new cdk.aws_route53.ARecord(this, 'AliasRecord', {
+      zone: hostedZone,
+      recordName: buildConfig.DomainName,
+      target: cdk.aws_route53.RecordTarget.fromAlias(
+        new cdk.aws_route53_targets.CloudFrontTarget(sf)
+      ),
     });
 
     // 👇 create a new A record in Route53 to point to the CloudFront distribution
