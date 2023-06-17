@@ -1,4 +1,4 @@
-name: "OIDC::Test"
+name: "OIDC::FE::Test"
 
 on:
     workflow_dispatch:
