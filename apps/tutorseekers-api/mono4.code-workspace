@@ -1,0 +1,30 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"name": "tutorseekers-api",
+			"path": "."
+		},
+		{
+			"name": "frontend",
+			"path": "../frontend"
+		},
+		{
+			"name": "eslint-config-custom",
+			"path": "../../packages/config/eslint-config-custom"
+		},
+		{
+			"name": "ui",
+			"path": "../../packages/shared/ui"
+		}
+	],
+	"settings": {
+		"jest.disabledWorkspaceFolders": [
+			"frontend",
+			"eslint-config-custom",
+			"ui"
+		]
+	}
+}
