@@ -27,14 +27,14 @@ export class SetupFrontendStack extends cdk.Stack {
     // const isProd = buildConfig.Environment === 'prod'
 
     // Get the hosted zone
-    const hostedZone = HostedZone.fromLookup(this, "HostedZone", {
-      domainName: buildConfig.DomainName
-    })
+    // const hostedZone = HostedZone.fromLookup(this, "HostedZone", {
+    //   domainName: buildConfig.DomainName
+    // })
 
 
 
-    const importedBucketValue = cdk.Fn.importValue('myBucket');
-    console.log('importedBucketValue 👉', importedBucketValue.toString());
+    // const importedBucketValue = cdk.Fn.importValue('myBucket');
+    // console.log('importedBucketValue 👉', importedBucketValue.toString());
 
     // 👇 define GET todos function
     const getTodosLambda = new lambda.Function(this, 'get-todos-lambda', {
