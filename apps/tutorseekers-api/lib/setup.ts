@@ -289,7 +289,7 @@ export class SetupStack extends cdk.Stack {
 
     // Stack outputs
     // - Certificate ARN
-    let exportName = buildConfig.Prefix + '-' + buildConfig.Environment+'-cert-arn'
+    let exportName = buildConfig.Prefix + '-cert-arn'
     new cdk.CfnOutput(this, exportName, { value: certificate.certificateArn, exportName }); 
 
     // // - Api Dev Domain

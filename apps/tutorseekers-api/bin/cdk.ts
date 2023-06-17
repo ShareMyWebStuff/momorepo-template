@@ -94,7 +94,7 @@ const main = async () => {
   }
 
   if ( ['dev', 'stg', 'prd'].includes(buildConfig.Environment) ){
-    let initialStackName = buildConfig.Prefix + buildConfig.Environment + '-base-infrastructure'
+    let initialStackName = buildConfig.Prefix + "-" + buildConfig.Environment + '-base-infrastructure'
     const mainStack = new SetupFrontendStack( app, initialStackName, stackProps, buildConfig)
   }
 
