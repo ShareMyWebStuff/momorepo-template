@@ -27,18 +27,18 @@ export class SetupFrontendStack extends cdk.Stack {
     // const isProd = buildConfig.Environment === 'prod'
 
     // Get the hosted zone
-    // const hostedZone = HostedZone.fromLookup(this, "HostedZone", {
-    //   domainName: buildConfig.DomainName
-    // })
+    const hostedZone = HostedZone.fromLookup(this, "HostedZone", {
+      domainName: buildConfig.DomainName
+    })
 
 
 
-    // const importedBucketValue = cdk.Fn.importValue('myBucket');
+    const importedBucketValue = cdk.Fn.importValue('myBucket');
     // console.log('importedBucketValue 👉', importedBucketValue.toString());
 
     // 👇 define GET todos function
     const getTodosLambda = new lambda.Function(this, 'get-todos-lambda', {
-      // functionName: 'html-mapper-dev', 
+      functionName: 'html-mapper-dev', 
       runtime: lambda.Runtime.NODEJS_16_X,
       handler: 'index.handler',
       code: lambda.Code.fromAsset(path.join(__dirname, '/src/html-mapper-fn')),
