@@ -62,28 +62,28 @@ export class SetupFrontendStack extends cdk.Stack {
       code: lambda.Code.fromAsset(path.join(__dirname, '/src/html-mapper-fn')),
     });
 
-    const sf = new cdk.aws_cloudfront.Distribution(this, 'Distribution', {
-      defaultBehavior: {
-        origin: new cdk.aws_cloudfront_origins.S3Origin(deployBucket),
-        viewerProtocolPolicy: cdk.aws_cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-        functionAssociations: [
-          {
-            function: htmlMapperFn,
-            eventType: cdk.aws_cloudfront.FunctionEventType.VIEWER_REQUEST,
-          },
-        ],
-      },
-      domainNames: [buildConfig.DomainName],
-      certificate: cert,
-      defaultRootObject: 'index.html',
-      errorResponses: [
-        {
-          httpStatus: 404,
-          responseHttpStatus: 404,
-          responsePagePath: '/404.html',
-        },
-      ],
-    });
+    // const sf = new cdk.aws_cloudfront.Distribution(this, 'Distribution', {
+    //   defaultBehavior: {
+    //     origin: new cdk.aws_cloudfront_origins.S3Origin(deployBucket),
+    //     viewerProtocolPolicy: cdk.aws_cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+    //     functionAssociations: [
+    //       {
+    //         function: htmlMapperFn,
+    //         eventType: cdk.aws_cloudfront.FunctionEventType.VIEWER_REQUEST,
+    //       },
+    //     ],
+    //   },
+    //   domainNames: [buildConfig.DomainName],
+    //   certificate: cert,
+    //   defaultRootObject: 'index.html',
+    //   errorResponses: [
+    //     {
+    //       httpStatus: 404,
+    //       responseHttpStatus: 404,
+    //       responsePagePath: '/404.html',
+    //     },
+    //   ],
+    // });
 
     // 👇 create a new A record in Route53 to point to the CloudFront distribution
     // new cdk.aws_route53.ARecord(this, 'AliasRecord', {
