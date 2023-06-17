@@ -32,6 +32,23 @@ export class SetupStack extends cdk.Stack {
       validation: cm.CertificateValidation.fromDns(hostedZone)
     })
 
+    // const exampleCom = new route53.HostedZone(this, 'ExampleCom', {
+    //   zoneName: 'example.com',
+    // });
+    // const exampleNet = new route53.HostedZone(this, 'ExampleNet', {
+    //   zoneName: 'example.net',
+    // });
+    
+    // const cert = new acm.Certificate(this, 'Certificate', {
+    //   domainName: 'test.example.com',
+    //   subjectAlternativeNames: ['cool.example.com', 'test.example.net'],
+    //   validation: acm.CertificateValidation.fromDnsMultiZone({
+    //     'test.example.com': exampleCom,
+    //     'cool.example.com': exampleCom,
+    //     'test.example.net': exampleNet,
+    //   }),
+    // });
+
     // Create the subdomains
     const devApiDomain = new cdk.aws_apigateway.DomainName(this, buildConfig.Prefix  + '-domain-api-dev', {
       domainName: 'api-dev.' + buildConfig.DomainName,
@@ -321,5 +338,12 @@ export class SetupStack extends cdk.Stack {
     new cdk.CfnOutput(this, exportName, { value: prodPublicUploadBucket.bucketName, exportName }); 
     exportName = buildConfig.Prefix + "-prod-upload-arn" 
     new cdk.CfnOutput(this, exportName, { value: prodPublicUploadBucket.bucketArn, exportName }); 
+
+
+    exportName = buildConfig.Prefix + "-deploy-name" 
+    new cdk.CfnOutput(this, exportName, { value: deployBucket.bucketName, exportName }); 
+    exportName = buildConfig.Prefix + "-deploy-arn" 
+    new cdk.CfnOutput(this, exportName, { value: deployBucket.bucketArn, exportName }); 
+
   }
 }

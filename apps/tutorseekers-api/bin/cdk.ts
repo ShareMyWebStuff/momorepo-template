@@ -9,6 +9,7 @@ import * as s3 from 'aws-cdk-lib/aws-s3';
 
 // import { CdkStack } from '../lib/cdk-stack';
 import { SetupStack } from '../lib/setup';
+import { SetupFrontendStack } from '../lib/setup-frontend';
 // import { VPCStack } from '../lib/create-vpc';
 
 
@@ -92,10 +93,10 @@ const main = async () => {
     const mainStack = new SetupStack( app, initialStackName, stackProps, buildConfig)
   }
 
-  // if ( ['dev', 'stg', 'prd'].includes(buildConfig.Environment) ){
-  //   let initialStackName = buildConfig.Prefix + buildConfig.Environment + '-base-infrastructure'
-  //   const mainStack = new BaseInfrastureStack( app, initialStackName, stackProps, buildConfig)
-  // }
+  if ( ['dev', 'stg', 'prd'].includes(buildConfig.Environment) ){
+    let initialStackName = buildConfig.Prefix + buildConfig.Environment + '-base-infrastructure'
+    const mainStack = new SetupFrontendStack( app, initialStackName, stackProps, buildConfig)
+  }
 
 
 
