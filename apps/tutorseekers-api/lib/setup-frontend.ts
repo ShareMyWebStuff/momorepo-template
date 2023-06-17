@@ -3,6 +3,8 @@ import { Construct } from 'constructs';
 import * as cm from 'aws-cdk-lib/aws-certificatemanager';
 import {BuildConfig} from './build-config'
 import { HostedZone } from 'aws-cdk-lib/aws-route53';
+import * as lambda from 'aws-cdk-lib/aws-lambda';
+import * as path from 'path';
 // import * as cloudfront from "@aws-cdk-lib/aws-cloudfront";
 import { ApiGatewayDomain } from 'aws-cdk-lib/aws-route53-targets';
 import * as s3 from 'aws-cdk-lib/aws-s3';
@@ -34,11 +36,13 @@ export class SetupFrontendStack extends cdk.Stack {
     const importedBucketValue = cdk.Fn.importValue('myBucket');
     console.log('importedBucketValue 👉', importedBucketValue.toString());
 
-    console.log ('Hosted Zone')
-    console.log ( hostedZone )
-
-    console.log ('Imported Bucket Value')
-    console.log ( importedBucketValue )
+    // 👇 define GET todos function
+    const getTodosLambda = new lambda.Function(this, 'get-todos-lambda', {
+      functionName: 'html-mapper-dev',
+      runtime: lambda.Runtime.NODEJS_16_X,
+      handler: 'index.handler',
+      code: lambda.Code.fromAsset(path.join(__dirname, './src/HtmlMapperFn')),
+    });
 
 
     // // Retrieve the bucket to deploy to
