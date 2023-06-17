@@ -1,4 +1,0 @@
-{
-  "root": true,
-  "extends": ["custom"] // Tells ESLint to use the "eslint-config-custom" package
-}
