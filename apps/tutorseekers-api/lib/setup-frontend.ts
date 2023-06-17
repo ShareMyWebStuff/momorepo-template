@@ -32,7 +32,11 @@ export class SetupFrontendStack extends cdk.Stack {
     })
 
 
-    const importCert = cdk.Fn.importValue(buildConfig.Prefix + '-cert-arn');
+    const importCert = cdk.Fn.importValue(buildConfig.Prefix + "-cert-arn");
+    const importBkt = cdk.Fn.importValue(buildConfig.Prefix + "-deploy-arn");
+
+    const deployBucket = s3.Bucket.fromBucketArn(this, "DeployBucket", importBkt);
+    const cert = cm.Certificate.fromCertificateArn(this, "Certificate", importCert);
 
 
     console.log ('###############################################')
@@ -40,6 +44,11 @@ export class SetupFrontendStack extends cdk.Stack {
     console.log ('###############################################')
     console.log ('###############################################')
     console.log('importCert 👉', importCert.toString());
+    console.log ('###############################################')
+    console.log ('###############################################')
+    console.log ('###############################################')
+    console.log ('###############################################')
+    console.log('importBkt 👉', importBkt.toString());
     console.log ('###############################################')
     console.log ('###############################################')
     console.log ('###############################################')
@@ -53,7 +62,37 @@ export class SetupFrontendStack extends cdk.Stack {
       code: lambda.Code.fromAsset(path.join(__dirname, '/src/html-mapper-fn')),
     });
 
+    const sf = new cdk.aws_cloudfront.Distribution(this, 'Distribution', {
+      defaultBehavior: {
+        origin: new cdk.aws_cloudfront_origins.S3Origin(deployBucket),
+        viewerProtocolPolicy: cdk.aws_cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+        functionAssociations: [
+          {
+            function: htmlMapperFn,
+            eventType: cdk.aws_cloudfront.FunctionEventType.VIEWER_REQUEST,
+          },
+        ],
+      },
+      domainNames: [buildConfig.DomainName],
+      certificate: cert,
+      defaultRootObject: 'index.html',
+      errorResponses: [
+        {
+          httpStatus: 404,
+          responseHttpStatus: 404,
+          responsePagePath: '/404.html',
+        },
+      ],
+    });
 
+    // 👇 create a new A record in Route53 to point to the CloudFront distribution
+    // new cdk.aws_route53.ARecord(this, 'AliasRecord', {
+    //   zone: hostedZone,
+    //   recordName: buildConfig.DomainName,
+    //   target: cdk.aws_route53.RecordTarget.fromAlias(
+    //     new ApiGatewayDomain(sf)
+    //   ),
+    // });
 
     // // Retrieve the bucket to deploy to
     // const deployBucket = new s3.Bucket(this, "DeployBucket")
