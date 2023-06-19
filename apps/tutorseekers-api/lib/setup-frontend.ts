@@ -68,9 +68,6 @@ export class SetupFrontendStack extends cdk.Stack {
       'html-mapper-dev-wee',
       {
         functionName: 'html-mapper-dev-wee',
-        // code: cdk.aws_cloudfront.FunctionCode.fromFile({
-        //   filePath: path.join(__dirname, '../dist/lib/src/html-mapper-fn/index.js'),
-        // }),
         code: cdk.aws_cloudfront.FunctionCode.fromInline(
           `function handler(event) {
             var request = event.request;
