@@ -68,21 +68,21 @@ export class SetupFrontendStack extends cdk.Stack {
       'html-mapper-dev-wee',
       {
         functionName: 'html-mapper-dev-wee',
-        code: cdk.aws_cloudfront.FunctionCode.fromFile({
-          filePath: path.join(__dirname, '../dist/lib/src/html-mapper-fn/index.js'),
-        }),
-        // code: cdk.aws_cloudfront.FunctionCode.fromInline(
-        //   `function handler(event) {
-        //     var request = event.request;
-        //     var uri = request.uri;
-        //     console.log("URI: " + uri);
-        //     if (uri.endsWith('/')) {
-        //       request.uri += 'index.html';
-        //     } else if (!uri.includes('.')) {
-        //       request.uri += '/index.html';
-        //     }    
-        //     return request;
-        //   }`)
+        // code: cdk.aws_cloudfront.FunctionCode.fromFile({
+        //   filePath: path.join(__dirname, '../dist/lib/src/html-mapper-fn/index.js'),
+        // }),
+        code: cdk.aws_cloudfront.FunctionCode.fromInline(
+          `function handler(event) {
+            var request = event.request;
+            var uri = request.uri;
+            console.log("URI: " + uri);
+            if (uri.endsWith('/')) {
+              request.uri += 'index.html';
+            } else if (!uri.includes('.')) {
+              request.uri += '/index.html';
+            }    
+            return request;
+          }`)
       }
     )
     const sf = new cdk.aws_cloudfront.Distribution(this, 'Distribution', {
