@@ -1,0 +1,115 @@
+.btn {
+    font: inherit;
+    background-color: $myYellow;
+    color: white;
+    width: 10rem;
+    height: 4.2rem;
+    border-radius: $btn-radius;
+    transition: all 0.3s;
+    
+    @include breakpoint_max('lg') {
+        width: 9rem;
+        height: 4rem;
+    }
+    
+    &:hover {
+        letter-spacing: .05rem;
+        -webkit-box-shadow: .4rem .4rem 0 rgba(0,0,0,0.57);
+        -moz-box-shadow: .4rem .4rem 0 rgba(0,0,0,0.57);
+        box-shadow: .4rem .4rem 0 rgba(0,0,0,0.57);
+        transition: all 0.4s ease 0s;
+        cursor: pointer;
+    }
+    
+    &:focus {
+        border-radius: $btn-radius;
+        outline: 1rem;
+    }
+
+    &.small {
+        height: 3rem;
+        width: 6rem;
+        font-size: 1.3rem;
+    }
+
+    &.large {
+        height: 5rem;
+    }
+
+    &.btnLong {
+        width: 14rem;
+    }
+
+    &.btnNarrow {
+        height: 3rem;
+    }
+
+    &.btnCross {
+        background-color: $myOrange;
+        color: $white;
+        width: 4rem;
+        border-radius: $btn-radius 0 0 $btn-radius;
+        border-right: none;
+    }
+
+    &.btnMiddle {
+        background-color: $myOrange;
+        color: $white;
+        width: 4rem;
+        border-radius: 0;
+        border-right: none;
+    }
+
+    &.btnTick {
+        background-color: $tick;
+        color: $white;
+        width: 4rem;
+        border-radius: 0 $btn-radius $btn-radius 0;
+    }
+
+    &.btnPrev {
+        background-color: $myBlue;
+        color: $white;
+        width: 4rem;
+        border-radius: $btn-radius 0 0 $btn-radius;
+        border-right: none;
+    }
+    &.btnNext {
+        background-color: $myBlue;
+        color: $white;
+        width: 4rem;
+        border-radius: 0 $btn-radius $btn-radius 0;
+    }
+
+    &.btnDisabled {
+        background-color: $gray40 !important;
+        cursor: auto !important;
+        &:hover {
+            letter-spacing: 0rem;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            
+        }
+    }
+
+    &.btnOrange { background-color: $myOrange; }
+    &.btnYellow { background-color: $myYellow; }
+    &.btnBlue   { background-color: $myBlue; 
+        &:hover{ background-color: $myOrange; }
+    }
+    &.btnBlueWhite {
+        background-color: white;
+        color: $myBlue;
+        &:hover{ background-color: $myOrange; }
+    }
+
+    &.btnGoogle{ background-color: $googleRed; }
+
+}
+
+.navBtns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

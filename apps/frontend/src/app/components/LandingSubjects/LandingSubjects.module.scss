@@ -1,0 +1,72 @@
+@import '@sass/app.scss';
+
+// Subjects section
+.landingSubjects {
+    background-color: $myOrange;
+}
+
+.container {
+    @include container();
+    padding: 5rem 0;
+    position: relative;
+}
+
+
+.subjectList {
+
+    padding-top: 2rem;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows: auto;
+
+    @include breakpoint_max ('md'){
+        grid-template-columns: 50% 50%;
+        grid-template-rows: auto auto;
+    }
+
+    @include breakpoint_max ('xs'){
+        grid-template-columns: 100% ;
+        grid-template-rows: auto auto auto auto;
+    }
+
+    // & .sub-img > img {
+    img {
+        width: 100%;
+        @include breakpoint_max ('md'){
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 60%;
+            text-align: center;
+        }
+        @include breakpoint_max ('xs'){
+            width: 40%;
+        }
+    }
+
+    h5 {
+        text-align: center;
+        color: $white;
+        font-weight: 500;
+        margin-bottom: 2rem;
+    }
+
+    > div:hover {
+        cursor: pointer;
+    }
+    > div:hover h5 {
+        color: $myBlue;
+    }
+
+}
+
+
+.subjectBtn {
+    button {
+        @include button;
+        display: block;
+        width: 20rem !important;
+        text-align: center;
+        margin: 3rem auto;
+    }
+}

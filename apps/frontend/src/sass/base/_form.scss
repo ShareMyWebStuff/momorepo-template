@@ -1,0 +1,270 @@
+// Cursors
+.cursor-wait { cursor: wait; };
+.cursor-pointer { cursor: pointer; };
+.cursor-not-allowed { cursor: not-allowed; };
+
+
+.form {
+
+    // select{-webkit-appearance: none;}
+
+    .form__label {
+        font-size: $labelFontSize !important;
+    }
+
+    .form__checkbox {
+        -ms-transform: scale(1.2); /* IE */
+        -moz-transform: scale(1.2); /* FF */
+        -webkit-transform: scale(1.2); /* Safari and Chrome */
+        -o-transform: scale(1.2); /* Opera */
+        transform: scale(1.2);
+        padding: 1rem 0 1rem 2rem; // 2rem;
+    }
+
+
+    .form__checkbox_prelabel {
+        padding: 1rem 0 1rem 2rem; // 2rem;
+    }
+
+    .form__input {
+        // color: inherit;
+        margin: .2rem 0 0;
+        margin: 1px 0;
+        font-size: inherit;
+        color: black;
+        background-color: white;
+        font-family: inherit;
+        // padding: 1rem 0 1rem 2rem; // 2rem;
+        padding: 1.5rem 2.5rem; // 2rem;
+        border-radius: .5rem;
+        border: none;
+        border: 1px solid $header-footer-bg;
+        // border-bottom: 3px solid transparent;
+        width: 100%;
+        transition: all .2s;
+        // background-color: white;
+
+        // padding-bottom: 1.1rem;
+        // border-bottom: solid 5px #ff6961;
+        // border-bottom: solid 5px $myOrange;
+
+        @media only screen and (max-width: 600px){
+            padding: 1rem 1.5rem; // 2rem;
+        }
+
+        &--valid {
+            border-left: 3px solid greenyellow;
+        }
+
+        &--warning {
+            border-left: 3px solid yellow;
+        }
+
+        &--error {
+            font-size: 1.2rem;
+            font-weight: 500;
+            display: block;
+            text-align: right;
+            margin-right: 2rem;
+        }
+
+        &:focus {
+            outline: none;
+            // box-shadow: 0 1rem 2rem rgba(black, .1);
+            border: 2px solid $myBlue;
+            margin: 0;
+        }
+
+    }
+
+    .form__select {
+        margin: 1px 0;
+        font-size: inherit;
+        color: black;
+        background-color: white;
+        font-family: inherit;
+        // padding: 1rem 0 1rem 2rem; // 2rem;
+        padding: 1.4rem 2.5rem; // 2rem;
+        border-radius: .5rem;
+        border: none;
+        border: 1px solid $header-footer-bg;
+        // border-bottom: 3px solid transparent;
+        width: 100%;
+        // transition: all .2s;
+        // background-color: white;
+
+        @media only screen and (max-width: 600px){
+            padding: 1rem 1.5rem; // 2rem;
+        }
+
+        &--valid {
+            border-left: 3px solid greenyellow;
+        }
+
+        &--warning {
+            border-left: 3px solid yellow;
+        }
+
+        &--error {
+            font-size: 1.2rem;
+            font-weight: 500;
+            display: block;
+            text-align: right;
+            margin-right: 2rem;
+        }
+
+        &:focus {
+            outline: none;
+            // box-shadow: 0 1rem 2rem rgba(black, .1);
+            border: 2px solid $myBlue;
+            margin: 0;
+        }
+
+    }
+
+}
+
+.shadow {
+    box-shadow: .7rem .6rem 0 rgba(147, 147, 147, 0.15);
+    border-radius: 1rem;
+    border: .1rem solid #dcdcdc;
+    background-color: #ffffff;
+    padding: 2rem 5rem;
+
+    &.pad-small {
+        padding: 1rem 1rem;
+    }
+
+    @include breakpoint_max ('md') {
+        padding: 2rem 2.5rem;
+    }
+
+    @include breakpoint_max ('xs') {
+        padding: .5rem .5rem;
+    }
+}
+
+// Creates a plinth
+// 
+// Default yellow
+.plinth {
+    padding: 2rem 4rem;
+    box-shadow: .4rem .3rem 0 rgba(147, 147, 147, 0.15);
+    border-radius: 1rem;
+    border: .2rem solid $darkerWhite;
+    background-color: $white;
+
+    h6{
+        margin: 1.5rem 0 2rem;
+        font-weight: 700;
+    }
+    
+    p {
+        line-height: 2rem;
+        margin: 2rem 1rem;
+    }
+
+    &.orange {
+        border: .2rem solid $pastelOrangeBorder;
+        background-color: $pastelOrange;
+    }
+
+    &.yellow {
+        border: .2rem solid $pastelYellowBorder;
+        background-color: $pastelYellow;
+    }
+
+    @include breakpoint_max ('md') {
+        padding: 2rem 2.5rem;
+    }
+
+    @include breakpoint_max ('xs') {
+        padding: .5rem .5rem;
+    }
+
+}
+
+
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    z-index: 1000;
+  
+    // Button that covers the entire background 
+    .modal__close {
+      display: block;
+      position: fixed;
+      background: rgba(255, 255, 255, 0.5);
+      border: none;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  
+    .modal__box {
+      position: relative;
+      // width: 50%;
+      // width: 50%;
+      max-width: 100%;
+      border-radius: 1rem;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      background-color: $white;
+      box-shadow: rgba(9, 30, 66, 0.25) 0rem 2rem 3.2rem -.8rem;
+      position: absolute;
+      left: 50%;
+      top: 45%;
+      transform: translate(-50%, -50%);    
+    }
+  
+    .modal__header {
+      background-color: $menu-dark-2-bg;
+      color: white;
+      border-radius: 1rem 1rem 0 0;
+      padding: 1.25rem 5rem;
+      text-align: center;
+    }
+  
+    .modal__paragrapth {
+      padding: 3rem 2rem;
+    }
+  
+    .modal__two-btns{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      margin-bottom: 2rem;
+    }
+    
+    .modal__close-btn {
+      position: absolute;
+      // top: var(--spacing);
+      // right: var(--spacing);
+      top: 1rem;
+      right: 1rem;
+      padding: 0;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .modal__close-btn svg {
+      // width: var(--spacing);
+      // height: var(--spacing);
+      width: 2.8rem;
+      height: 2.8rem;
+      fill: currentColor;
+      opacity: 0.5;
+    }
+    
+    .modal__close-btn:hover svg {
+      opacity: 1;
+    }
+  
+}
+  

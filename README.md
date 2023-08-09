@@ -129,7 +129,7 @@ Create / update the .eslintrc.json file in the project
 }
 
 Run the following to 
-yarn install
+yarn add
 
 Add the linting scrips to the package.json file in the application
 

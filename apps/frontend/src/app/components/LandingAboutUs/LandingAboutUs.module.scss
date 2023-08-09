@@ -1,0 +1,46 @@
+@import '../src/sass/app.scss';
+
+
+.landingAboutUs {
+    @include container();
+    padding: 4rem 2rem;
+}
+
+
+// About Us section
+.landingAboutUsArticle {
+    img {
+        float: left;
+        width: 30rem;
+        margin-right: 2rem;
+        @include breakpoint_max ('md'){
+            width: 20rem;
+            margin-right: 1rem;
+        }
+    }
+
+    p:first-of-type {
+        padding-top: 2rem;
+        @include breakpoint_max ('md'){
+            padding-top: 1rem;
+        }
+    }
+
+    p {
+        margin: .5rem;
+        font-weight: 400;
+        line-height: 3.3rem;
+        margin-bottom: 3rem;
+        @include breakpoint_max ('lg'){
+            line-height: 3rem;
+            margin-bottom: 2rem;
+        }
+    }
+
+    &::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+}
+

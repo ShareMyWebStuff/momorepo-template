@@ -1,0 +1,104 @@
+@import '../abstracts/variables';
+@import '../abstracts/mixins';
+@import './utilities';
+@import './form';
+@import './buttons';
+@import './tables';
+
+*,
+*:after,
+*:before {
+  box-sizing: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+// This defines what 1rem is
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  font-size: $defaultFontSize;
+  font-family: arial, 'Rubik', sans-serif;
+  font-weight: 400;
+
+  h1 {
+    font-size: calc($defaultFontSize * 22/14);
+    letter-spacing: .1rem;
+    font-weight: 500;
+
+  }
+
+  h2 {
+    font-size: calc($defaultFontSize * 20/14);
+    letter-spacing: .1rem;
+    font-weight: 500;
+  }
+
+  h3 {
+    font-size: calc($defaultFontSize * 19/14);
+    letter-spacing: .1rem;
+    font-weight: 500;
+  }
+
+  h4 {
+    font-size: calc($defaultFontSize * 18/14);
+    letter-spacing: .1rem;
+    font-weight: 500;
+  }
+
+  h5 {
+    font-size: calc($defaultFontSize * 17/14);
+    letter-spacing: .1rem;
+    font-weight: 500;
+  }
+
+  h6 {
+    font-size: calc($defaultFontSize * 16/14);
+    letter-spacing: .1rem;
+    font-weight: 500;
+  }
+
+  .small-text {
+      font-size: calc($defaultFontSize * 12/14);
+  }
+
+  .bold {
+      font-weight : 700;
+  }
+
+  p {
+    line-height: 2.4rem;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .section-title {
+    display: inline-block;
+    padding-left: 40%;
+    @include breakpoint_max ('xs'){
+      padding-left: 30%;
+    }
+
+    h3 {
+      color: $offBlack;
+      font-weight: 900;
+      line-height: 1;
+      margin: 0;
+    }
+
+    div {
+        margin-top: 1.5rem;
+        width: 9.3rem;
+        height: .4rem;
+        background-color: $myYellow;
+        margin-bottom: 2.5rem;
+    }
+  }
+
+}
+

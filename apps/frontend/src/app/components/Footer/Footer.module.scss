@@ -1,0 +1,135 @@
+@import './src/sass/app.scss';
+
+// Footer style
+.footer {
+    background-color: $header-footer-bg;
+    color: $white;
+    > div {
+        @include container();
+    }
+}
+
+// Format the footer logo
+.footerLogo {
+    display: inline-block;
+    width: 36rem;
+    @include breakpoint_max('lg') {
+        width: 30rem;
+    }
+    @include breakpoint_max('md') {
+        width: 22rem;
+    }
+    @include breakpoint_max('sm') {
+        width: 20rem;
+    }
+}
+
+// Top part of the footer. Formatting for the company, services and popular subjects
+.topFooter {
+    display: grid;
+    grid-template-columns: 2.5fr 1fr 1fr 1.2fr;
+    grid-template-rows: auto;
+    padding: 3rem 0;
+
+    @include breakpoint_max ('sm'){
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        row-gap: 2rem;
+    }
+
+    @include breakpoint_max ('xs'){
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        row-gap: 2rem;
+    }
+
+}
+
+// Format the logo and text
+.mission{
+    margin-left: 1.5rem;
+
+    @include breakpoint_max('xs') {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    p {
+        padding: 2rem 0;
+    }
+
+}
+
+// Format the groups
+.groupLinks {
+
+    h5 { padding-bottom: 1.5rem;  }
+    ul { list-style: none; }
+    li {
+        padding: .5rem 0;
+        border-bottom: 1px solid $header-footer-bg;
+    }
+    a {
+        color: $white;
+        cursor: default;
+
+    }
+}
+
+// Format the social media icons
+.socialIcons {
+    color: white;
+    font-size: 4rem;
+    margin-left: 4rem;
+    svg {
+        margin: 0 1rem;
+        height: 4rem;
+    }
+}
+
+// Format the copyright statement
+.bottomFooter {
+    padding: 3.5rem 0;
+    border-top: 1px solid #494949;
+
+    p {
+        color: #c0c0c0;
+        text-align: center;
+    }
+}
+
+// If the menu is enabled then underlines are shown and the cursor is a pointer
+.navbarEnabled {
+
+    .socialFB:hover {
+        color: #3B5998;
+        transition:all .001s;
+        cursor: pointer;
+    }
+    .socialTW:hover {
+        color: #4099FF;
+        transition:all .001s;
+        cursor: pointer;
+    }
+    .socialEM:hover {
+        color: #f39c12;
+        transition:all .001s;
+        cursor: pointer;
+    }
+
+    li:hover {
+        display: inline-block;
+        border-bottom: 1px solid white;
+        cursor: pointer;
+    }
+    
+    .footerLogo:hover{
+        cursor: pointer;
+    }
+
+    a {
+        color: $white;
+        cursor: pointer;
+    }
+
+}

@@ -1,0 +1,62 @@
+@import '@sass/app.scss';
+
+// .msg {
+//     padding-left: .5rem;
+//     padding: 0 0 0 .5rem;
+//     border-radius: .25rem;
+//     margin: .25rem 0;
+// }
+
+.fatalMsg {
+    background-color: #ff6961;
+    color: $black;
+    // padding: 1rem;
+    padding: .25rem;
+    border-radius: .5rem;
+}
+
+.warningMsg {
+    background-color: $myYellow;
+    color: $black;
+    // padding: 1rem;
+    padding: .25rem;
+    border-radius: .5rem;
+}
+
+.infoMsg {
+    background-color: $myBlue;
+    color: $white;
+    padding: .25rem;
+}
+
+.fatal {
+    background-color: #ff6961;
+    color: $black;
+    padding: 1rem;
+    // padding: .75rem;
+    border-radius: .5rem;
+}
+
+.error {
+    background-color: #ff6961;
+    color: $black;
+    padding: 1rem;
+    // padding: .75rem;
+    border-radius: .5rem;
+}
+
+.warning {
+    background-color: $myYellow;
+    color: $black;
+    padding: 1rem;
+    // padding: .75rem;
+    border-radius: .5rem;
+}
+
+.info {
+    background-color: $myBlue;
+    color: $white;
+    padding: 1rem;
+    // padding: .75rem;
+    border-radius: .5rem;
+}

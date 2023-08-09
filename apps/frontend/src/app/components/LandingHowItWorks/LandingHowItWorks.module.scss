@@ -1,0 +1,172 @@
+// @import 'app/styles/app.scss';
+@import '../src/sass/app.scss';
+
+// How It Works Section
+.landingHow {
+    background-color: $offWhite;
+}
+
+.container {
+    @include container();
+    padding: 4rem 2rem;
+}
+
+// Define the steps on the left side of the page
+.landingHowStep {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    column-gap: 4rem;
+    margin: 3rem 0;
+    @include breakpoint_max ('sm'){
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+    }
+
+    >div:nth-child(1) {
+        grid-column: 1 / span 1;
+        grid-row: 1 / span 1;
+        margin: 2rem auto;
+        @include breakpoint_max ('sm'){
+            margin-left: 0;
+        }
+    }
+
+    >div:nth-child(2) {
+        grid-column: 2 / span 2;
+        grid-row: 1 / span 1;
+        align-self: center;
+        @include breakpoint_max ('sm'){
+            grid-column: 1 / span 1;
+            grid-row: 2 / span 1;
+            margin-left: 4rem;
+            // margin-left: 0;
+        }
+    }
+}
+
+// Define the steps on the right side of the page
+.landingHowStepRev {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    column-gap: 4rem;
+    @include breakpoint_max ('sm'){
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+    }
+
+    >div:nth-child(1) {
+        grid-column: 3 / span 1;
+        grid-row: 1 / span 1;
+        @include breakpoint_max ('sm'){
+            margin: 0 auto;
+            grid-column: 1 / span 1;
+            margin: 2rem auto;
+        }   
+    }
+
+    >div:nth-child(2) {
+        grid-column: 1 / span 2;
+        grid-row: 1 / span 1;
+        align-self: center;
+
+        @include breakpoint_max ('sm'){
+            grid-column: 1 / span 1;
+            grid-row: 2 / span 1;
+            margin-left: 4rem;
+        }
+    }
+}
+
+// Define the images
+.howWorkImg {
+    box-shadow: .7rem .6rem 0 $gray147;
+    border: 1px solid $darkerWhite;
+    background-color: $white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28rem;
+    height: 28rem;
+    > img {
+        width: 70%;
+    }
+    @include breakpoint_max ('lg'){
+        width: 25rem;
+        height: 25rem;
+
+        > img {
+            width: 60%;                
+        }
+    }
+    @include breakpoint_max ('md'){
+        width: 20rem;
+        height: 20rem;
+
+        > img {
+            width: 50%;                
+        }
+    }
+    @include breakpoint_max ('sm'){
+        width: 12rem;
+        height: 12rem;
+        margin: 2rem auto !important;
+
+        > img {
+            width: 50%;
+        }
+    }
+}
+
+// Defines the styles for the how it works content
+.howWorkContent {
+
+    margin-left: 2rem;
+    // @include breakpoint_max ('sm'){
+    //     margin-left: 0;
+    //     margin-right: 0;
+    // }
+
+    h3 {
+        color: $black;
+        font-weight: 500;
+        line-height: 4.6rem;
+        margin-bottom: 2rem;
+        @include breakpoint_max ('sm'){
+            text-align: center;
+            margin-left: -4rem;
+        }
+    }
+
+    ul {
+        list-style: none;
+        padding-left: 0;
+        @include breakpoint_max ('sm'){
+            list-style: square;
+        }
+    }
+
+    ul li {
+        padding-left: 4rem;
+        position: relative;
+        color: $black;
+        font-weight: 400;
+        margin-bottom: 1.6rem;
+        @include breakpoint_max ('sm'){
+            padding-left: 0;
+        }
+    }
+
+    ul li:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        width: 2.7rem;
+        height: 2.1rem;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+    }
+}

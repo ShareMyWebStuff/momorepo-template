@@ -1,0 +1,245 @@
+@import '../sass/abstracts/variables';
+@import '../sass/abstracts/mixins';
+@import '../sass/abstracts/functions';
+@import '../sass/base/reset';
+@import '../sass/base/typography';
+
+
+// // /* Font 14px - maybe 15px */
+// // $orange: #ef4136;
+// // $yellow: #f7941d;
+// // $blue: #141464;
+// // $pastel-orange-25: lighten($orange, 25%);
+// // $pastel-orange-15: lighten($orange, 15%);
+// // $pastel-yellow-30: lighten($yellow, 30%);
+// // $pastel-yellow-15: lighten($yellow, 15%);
+// // $header-footer-bg1: #282828;
+// // $white-text: white;
+
+// // $breakpoint-lg: 1200px;
+// // $breakpoint-md: 992px;
+// // $breakpoint-sm: 768px;
+// // $breakpoint-xs: 576px;
+
+
+
+// /* :root {
+//   --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
+//     'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
+//     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+// } */
+
+
+
+
+
+// /* *,
+// *:after,
+// *:before {
+//   box-sizing: inherit;
+//   padding: 0;
+//   margin: 0;
+// } */
+
+
+// /* // Whites
+// $white: white;
+// $offWhite: #f8f8f8;
+// $darkerWhite: #dcdcdc;
+
+// // Blacks
+// $black: black;
+// $offBlack: #121212;
+// $blackOpaque_3: rgba( black, .3);
+// $blackOpaque_6: rgba( black, .6);
+// $borderColour: #212121;
+
+
+// // Grays
+// $veryLightGray: #ddd;
+// $gray147: rgba(147, 147, 147, 0.15);
+// $gray40: #666666;
+// $gray100: #efefef;
+// $legal: #666666;
+
+// // Site colours
+// $myYellow: #f7941d;
+// $myOrange: #ef4136;
+// $myBlue: #141464;
+
+// // Pastel red error colour
+// $warningNotifcation: lighten(#ff6961, 15%);
+// $warningNotifcationBorder: #ff6961;
+
+// // Pastel yellow
+// $pastelOrange: lighten(#ef4136, 25%);
+// $pastelOrangeBorder: lighten(#ef4136, 15%);
+// $pastelYellow: lighten(#f7941d, 30%);
+// $pastelYellowBorder: lighten(#f7941d, 15%);
+
+
+// $myRedError: #ff6961;
+// $googleRed: #df4930;
+// $tick: #4CAF50;
+
+// $header-footer-bg: #282828;
+// $menu-dark-1-bg: lighten($header-footer-bg, 10%);
+// $menu-dark-2-bg: lighten($header-footer-bg, 20%); */
+
+// // :root {
+// //   /* --max-width: 1100px; */
+// //   --border-radius: 12px;
+// //   --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
+// //     'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
+// //     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+
+// //   --orange: #ef4136;
+// //   --yellow: #f7941d;
+// //   --blue: #141464;
+// //   --pastel-orange-25: lighten(var(--orange), 25%);
+// //   --pastel-orange-15: lighten(var(--orange), 15%);
+
+// //   --pastel-yellow-30: lighten(var(--yellow), 30%);
+// //   --pastel-yellow-15: lighten(var(--yellow), 15%);
+
+// //   --header-footer-bg: #282828;
+
+// //   --white-text: white;
+
+// //   --default-Fontsize:1.4rem;
+
+// //   --breakpoint-lg: 1200px;
+// //   --breakpoint-md: 992px;
+// //   --breakpoint-sm: 768px;
+// //   --breakpoint-xs: 576px;
+
+//   /* --foreground-rgb: 0, 0, 0;
+//   --background-start-rgb: 214, 219, 220;
+//   --background-end-rgb: 255, 255, 255;
+
+//   --primary-glow: conic-gradient(
+//     from 180deg at 50% 50%,
+//     #16abff33 0deg,
+//     #0885ff33 55deg,
+//     #54d6ff33 120deg,
+//     #0071ff33 160deg,
+//     transparent 360deg
+//   );
+//   --secondary-glow: radial-gradient(
+//     rgba(255, 255, 255, 1),
+//     rgba(255, 255, 255, 0)
+//   );
+
+//   --tile-start-rgb: 239, 245, 249;
+//   --tile-end-rgb: 228, 232, 233;
+//   --tile-border: conic-gradient(
+//     #00000080,
+//     #00000040,
+//     #00000030,
+//     #00000020,
+//     #00000010,
+//     #00000010,
+//     #00000080
+//   );
+
+//   --callout-rgb: 238, 240, 241;
+//   --callout-border-rgb: 172, 175, 176;
+//   --card-rgb: 180, 185, 188;
+//   --card-border-rgb: 131, 134, 135; */
+// }
+
+// /* @media (prefers-color-scheme: dark) {
+//   :root {
+//     --foreground-rgb: 255, 255, 255;
+//     --background-start-rgb: 0, 0, 0;
+//     --background-end-rgb: 0, 0, 0;
+
+//     --primary-glow: radial-gradient(rgba(1, 65, 255, 0.4), rgba(1, 65, 255, 0));
+//     --secondary-glow: linear-gradient(
+//       to bottom right,
+//       rgba(1, 65, 255, 0),
+//       rgba(1, 65, 255, 0),
+//       rgba(1, 65, 255, 0.3)
+//     );
+
+//     --tile-start-rgb: 2, 13, 46;
+//     --tile-end-rgb: 2, 5, 19;
+//     --tile-border: conic-gradient(
+//       #ffffff80,
+//       #ffffff40,
+//       #ffffff30,
+//       #ffffff20,
+//       #ffffff10,
+//       #ffffff10,
+//       #ffffff80
+//     );
+
+//     --callout-rgb: 20, 20, 20;
+//     --callout-border-rgb: 108, 108, 108;
+//     --card-rgb: 100, 100, 100;
+//     --card-border-rgb: 200, 200, 200;
+//   }
+// } */
+
+// /* *,
+// *:after,
+// *:before {
+//   box-sizing: inherit;
+//   padding: 0;
+//   margin: 0;
+// } */
+
+// // *,
+// // *:after,
+// // *:before {
+// //   box-sizing: border-box;
+// //   padding: 0;
+// //   margin: 0;
+// // }
+
+// // // This defines what 1rem is
+// // html {
+// //   /* font-size: 62.5%; */
+// // }
+
+// // body {
+// //   box-sizing: border-box;
+// //   font-family: 'Montserrat', sans-serif;
+// //   font-size: 1rem;
+
+// //   /* font-size: var(--default-Fontsize); */
+// //   font-family: arial, 'Rubik', sans-serif;
+// //   font-weight: 400;
+
+
+// //   /* @include breakpoint_max ('md'){
+// //     font-size: 1.5rem;
+// //   } */
+// // }
+
+// /* html,
+// body {
+//   max-width: 100vw;
+//   overflow-x: hidden;
+// } */
+
+// /* body {
+//   color: rgb(var(--foreground-rgb));
+//   background: linear-gradient(
+//       to bottom,
+//       transparent,
+//       rgb(var(--background-end-rgb))
+//     )
+//     rgb(var(--background-start-rgb));
+// } */
+
+// // a {
+// //   color: inherit;
+// //   text-decoration: none;
+// // }
+
+// /* @media (prefers-color-scheme: dark) {
+//   html {
+//     color-scheme: dark;
+//   }
+// } */

@@ -1,0 +1,70 @@
+// Colours
+
+// Whites
+$white: white;
+$offWhite: #f8f8f8;
+$darkerWhite: #dcdcdc;
+
+// Blacks
+$black: black;
+$offBlack: #121212;
+$blackOpaque_3: rgba( black, .3);
+$blackOpaque_6: rgba( black, .6);
+$borderColour: #212121;
+
+
+// Grays
+$veryLightGray: #ddd;
+$gray147: rgba(147, 147, 147, 0.15);
+$gray40: #666666;
+$gray100: #efefef;
+$legal: #666666;
+
+// Site colours
+$myYellow: #f7941d;
+$myOrange: #ef4136;
+$myBlue: #141464;
+
+// Pastel red error colour
+$warningNotifcation: lighten(#ff6961, 15%);
+$warningNotifcationBorder: #ff6961;
+
+// Pastel yellow
+$pastelOrange: lighten(#ef4136, 25%);
+$pastelOrangeBorder: lighten(#ef4136, 15%);
+$pastelYellow: lighten(#f7941d, 30%);
+$pastelYellowBorder: lighten(#f7941d, 15%);
+
+
+$myRedError: #ff6961;
+$googleRed: #df4930;
+$tick: #4CAF50;
+
+$header-footer-bg: #282828;
+$menu-dark-1-bg: lighten($header-footer-bg, 10%);
+$menu-dark-2-bg: lighten($header-footer-bg, 20%);
+
+$defaultFontSize:1.4rem;
+$labelFontSize:1.1rem;
+
+// Buttons
+$btn-radius: 1rem;
+
+// Icon ration size
+$icon-ratio: .75;
+
+
+// $breakpoints: (
+//   xs: 0,
+//   sm: 576px,
+//   md: 768px,
+//   lg: 992px,
+//   xl: 1200px,
+// );
+
+// $container-max-widths: (
+//   sm: 540px,
+//   md: 720px,
+//   lg: 960px,
+//   xl: 1140px,
+// );

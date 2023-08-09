@@ -1,0 +1,75 @@
+// @import '@/src/sass/app.scss';
+@import '../src/sass/app.scss';
+
+.landingBanner {
+    background-image: url('/images/landing/banner-bg.png');
+    background-size: cover;
+    @include breakpoint_max ('md'){
+        background-position: 30% 40%;
+    }
+}
+
+// Landing header - formats the mission quotes and the serach area
+.landingHeader {
+    @include container();
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 18.5rem;
+    padding-bottom: 11rem;
+
+    @include breakpoint_max ('sm'){
+        flex-direction: column;
+        padding-top: 12.5rem;
+    }
+}
+
+.landingHeaderSearch {
+    flex-basis: 48%;
+    border-radius: .8rem;
+    background-color: $blackOpaque_6;
+    // min-height: 54.2rem;
+    height: 54.2rem;
+
+    @include breakpoint_max ('md'){
+        min-height: 52.3rem;
+    }
+
+    > h4 {
+        margin-bottom: 3rem;
+        text-align: center;
+        color: $myYellow;
+    }
+
+    @include breakpoint_max ('sm'){
+        min-width: 90%;
+        max-width: 50rem;
+        align-self: center;
+    }
+    padding: 6rem 3rem;
+
+}
+
+.landingHeaderQuote {
+    flex-basis: 48%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    h2, h3 {
+        color: $white;
+        margin: 5rem 2rem;
+        @include breakpoint_max ('sm'){
+            text-align: center;
+            margin: 1rem auto 4rem auto;
+        }
+    }
+}
+
+
+.btnSearch {
+    // @include button;
+    width: 100%;
+    background-color: $myOrange;
+    height: 6rem;
+}

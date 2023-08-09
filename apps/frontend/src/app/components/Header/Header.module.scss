@@ -1,0 +1,199 @@
+@import './src/sass/app.scss';
+
+// Container to set the width of the navbar
+.container {
+    @include container();
+    position: relative;
+}
+
+.navbar {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 1.5rem;
+    left: 0;
+    right: 0;
+    padding: 5.5rem 0;
+
+    @include breakpoint_max('lg') {
+        padding: 4rem 0;
+    }
+    @include breakpoint_max('md') {
+        padding: 2rem 0;
+    }
+    @include breakpoint_max('sm') {
+        padding: 1.5rem 0;
+    }
+
+    // Hides the toggler checkbox. 
+    // #navbar-toggler__checkbox {
+    [id=navbar-toggler__checkbox] {
+        display: none;
+
+        &:checked + .navbarMenu { display: block; }
+    }
+
+    // Hide the input fields used to toggle the dropdown menu items
+    [id^=navbar-dropdown] { display: none; }
+
+}
+
+.navRelative { position: relative; }
+.navAbsolute { position: absolute; }
+.navbarLight { background-color: $white }
+.navbarDark { background-color: $header-footer-bg; }
+.navbarNarrow { padding: 1rem 0; }
+
+.menuDropdown { color: $white; }
+.navbarLight .menuDropdown { color: $black; }
+// .menuDropdown .enabled:hover { border-bottom: 1px solid $white; }
+// .navbarLight .menuDropdown:hover { border-bottom: 1px solid $black; }
+.menuItem { color: $white }
+// .menuItem:hover span { border-bottom: 1px solid $white; }
+
+// If the menu is enabled then underlines are shown and the cursor is a pointer
+.navbarEnabled {
+    .menuDropdown:hover { border-bottom: 1px solid $white; }
+    .navbarLight .menuDropdown:hover { border-bottom: 1px solid $black; }
+    .menuItem:hover span { border-bottom: 1px solid $white; }
+
+    > ul {
+        li {
+            cursor: pointer;
+        }
+    }
+}
+
+// Logo sizing
+.navbarLogo {
+    display: inline-block;
+    width: 36rem;
+    @include breakpoint_max('lg') {
+        width: 30rem;
+    }
+    @include breakpoint_max('md') {
+        width: 22rem;
+    }
+    @include breakpoint_max('sm') {
+        width: 20rem;
+    }
+
+    &.enabled:hover {
+        cursor: pointer;
+    }
+    // &:hover{
+    //     cursor: pointer;
+    // }
+
+}
+
+// Define the toggle button. Not displayed above md screens, displayed below.
+.navbarToggler {
+    display: none;
+
+    @include breakpoint_max('sm') {
+        display: inline-block;
+        margin-right: 1rem;
+        color: $myOrange;
+    }
+}
+
+// Define the menu bar
+.navbarMenu {
+
+    @include breakpoint_max('sm') {
+        position: absolute;
+        top: 7.4rem;
+        left: 0;
+        right: 0;
+        margin: 0 1.5rem;
+        border-radius:.5rem;
+        display: none;
+        z-index: 200;
+        background-color: $black;
+    }
+
+    ul {
+        list-style-type: none;
+    }        
+
+    ul ul { 
+        background-color: $menu-dark-1-bg;
+        @include breakpoint_max('sm') {
+            background-color: $menu-dark-2-bg;
+        }
+    }
+
+    > ul {
+        display: flex;
+        justify-content: space-around;
+        li {
+            margin: .5rem;
+            padding: 0 1.5rem;
+            line-height: 3rem;
+            // cursor: pointer;
+            @include breakpoint_max('md') {
+                margin: 0;
+            }
+            @include breakpoint_min('sm') {
+                padding: 0 .75rem;
+
+                &.enabled:hover > ul {
+                    display: block;
+                }
+            }
+        }
+        > li {
+            line-height: 4rem;
+        }
+        ul {
+            border-radius: .5rem;
+            display: none;
+            z-index: 100;
+            > li {
+                min-width: 17rem;
+            }
+            @include breakpoint_min('sm') {
+                position: absolute;
+            }
+        }
+
+        @include breakpoint_max('sm') {
+            [id^=navbar-dropdown]:checked + ul { display: block; }
+            display: block;
+            width: 100%;
+            > li {
+                display: block;
+                width: 100%;
+            }
+        }
+    }
+}
+
+.navbar-dark .navbar-menu {
+    @include breakpoint_max('sm') {
+    background-color: $menu-dark-1-bg;
+    }
+}
+
+.logonBtn {
+    @include button;
+    background-color: $myOrange !important;
+    color: $white;
+    margin: 0 1rem 0 0;
+}
+
+.logoutBtn {
+    @include button;
+    background-color: $myOrange !important;
+    color: $white;
+    margin: 0 1rem 0 0;
+}
+
+.registerBtn {
+    @include button;
+    background-color: $myYellow !important;
+    color: $white;
+}
+

@@ -1,0 +1,40 @@
+// @import 'app/styles/app.scss';
+@import '@sass/app.scss';
+
+.inputDropdown {
+    position: relative;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.inputDropdownItems {
+    position: absolute;
+    border: 1px solid $black;
+    border-radius: 0 0 1rem 1rem;
+    border-top: none;
+    z-index: 100;
+    top: 98%;
+    left: 0;
+    right: 0;
+
+    & div {
+        padding: 1rem;
+        cursor: pointer;
+        background-color: $white; 
+        border-top: 1px solid #d4d4d4;
+
+        &.disabled {
+            text-decoration: line-through;
+        }
+
+        &:last-child {
+            border-radius: 0 0 1rem 1rem;
+        }
+    }
+}
+
+.active {
+    background-color: #e9e9e9 !important; 
+}

@@ -1,0 +1,261 @@
+
+// Breakpoint mixins
+@mixin breakpoint_max($breakpoint) {
+    @if ($breakpoint == lg){
+        @media only screen and ( max-width: 1200px ) {
+            @content;
+        }
+    } @else if ($breakpoint == md){
+        @media only screen and ( max-width: 992px ) {
+            @content;
+        }
+    } @else if ($breakpoint == sm){
+        @media only screen and ( max-width: 768px ) {
+            @content;
+        }
+    } @else if ($breakpoint == xs){
+        @media only screen and ( max-width: 576px ) {
+            @content;
+        }
+    }
+}
+
+// @mixin breakpoint_value($breakpoint) {
+//     @media only screen and ( max-width: $breakpoint ) {
+//         @content;
+//     }
+// }
+
+
+@mixin breakpoint_min($breakpoint) {
+    @if ($breakpoint == lg){
+        @media only screen and ( min-width: 1200px ) {
+            @content;
+        }
+    } @else if ($breakpoint == md){
+        @media only screen and ( min-width: 992px ) {
+            @content;
+        }
+    } @else if ($breakpoint == sm){
+        @media only screen and ( min-width: 768px ) {
+            @content;
+        }
+    } @else if ($breakpoint == xs){
+        @media only screen and ( min-width: 576px ) {
+            @content;
+        }
+    }
+}
+
+
+@mixin container () {
+
+    margin-left: auto;
+    margin-right:auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    max-width: 1200px;
+    width: 80%;
+    width: 95%;
+
+    // border: 1px black solid;
+
+    @include breakpoint_max ('lg') {
+        width: 100%;
+    }
+
+    @include breakpoint_max ('md') {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    } 
+
+}
+
+@mixin hideInput {width: 0; height: 0; position: absolute; left: -9999px;}
+
+// Disallows users to select text on the element
+@mixin noSelect() {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Safari */
+    -khtml-user-select: none;    /* Konqueror HTML */
+    -moz-user-select: none;      /* Old versions of Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;           /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+// Button mixins
+@mixin button() {
+    font: inherit;
+    background-color: $myYellow;
+    color: white;
+    width: 10rem;
+    height: 4.2rem;
+    border-radius: $btn-radius;
+    transition: all 0.3s;
+    
+    @include breakpoint_max('lg') {
+        width: 9rem;
+        height: 4rem;
+    }
+    
+    &:hover {
+        letter-spacing: .05rem;
+        -webkit-box-shadow: .4rem .4rem 0 rgba(0,0,0,0.57);
+        -moz-box-shadow: .4rem .4rem 0 rgba(0,0,0,0.57);
+        box-shadow: .4rem .4rem 0 rgba(0,0,0,0.57);
+        transition: all 0.4s ease 0s;
+        cursor: pointer;
+    }
+    
+    &:focus {
+        border-radius: $btn-radius;
+        outline: 1rem;
+    }
+
+    &.small {
+        height: 3rem;
+        width: 6rem;
+        font-size: 1.3rem;
+    }
+
+    &.large {
+        height: 5rem;
+    }
+
+    &.btn-disabled {
+        background-color: $gray40 !important;
+        cursor: auto !important;
+        &:hover {
+            letter-spacing: 0rem;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// @mixin breakpoint($breakpoint) {
+//     @if map-has-key($breakpoints, $breakpoint) {
+//         @media (min-width: #{map-get($breakpoints, $breakpoint)}) {
+//             @content;
+//         }
+//     } @else {
+//         @warn 'Unfortunately, no value could be retrieved from `#{$breakpoint}`. '
+//         + 'Please make sure it is defined in `$grid-breakpoints` map.';
+//     }
+// }
+  
+// @mixin content-width {
+//     // width: 100%;
+//     max-width: map_get($container-max-widths, xs);
+//     // padding: 0 1rem;
+  
+//     @include breakpoint('sm') {
+//       max-width: map_get($container-max-widths, sm);
+//     //   padding: 0;
+//     }
+  
+//     @include breakpoint('md') {
+//       max-width: map_get($container-max-widths, md);
+//     }
+  
+//     @include breakpoint('lg') {
+//       max-width: map_get($container-max-widths, lg);
+//     }
+  
+//     @include breakpoint('xl') {
+//       max-width: map_get($container-max-widths, xl);
+//     }
+// }
+
+
+
+// //
+// // Specifies the content width for different 
+// //
+// @mixin content-width($breakpoint) {
+
+//     @if map-has-key($breakpoints, $breakpoint ) {
+//         @debug "divider offset: #{$breakpoint}";
+//         @debug map-get($breakpoints, $breakpoint);
+//         @debug #{inspect(map-get($breakpoints, $breakpoint))};
+//         @media #{inspect(map-get($breakpoints, $breakpoint))} {
+//             @content;
+//         }
+//     }
+
+//     @else {
+//         @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. " + "Available breakpoints are: #{map-keys($breakpoints)}.";
+//     }
+// }
+
+
+// @mixin container() {
+
+//     margin-left: auto;
+//     margin-right:auto;
+//     padding-left: 1.5rem;
+//     padding-right: 1.5rem;
+//     max-width: 1200px;
+//     width: 80%;
+
+//     @include content-width('brk_1700') {
+//         width: 80%;
+//         background-color: lightsalmon;
+//     }
+
+//     @include content-width('brk_1550') {
+//         width: 85%;
+//         background-color: lightcoral;
+//     }
+
+//     @include content-width('brk_1420') {
+//         width: 90%;
+//         background-color: crimson;
+//     }
+
+//     @include content-width('brk_1300') {
+//         width: 95%;
+//         background-color: red;
+//     }
+    
+//     @include content-width('brk_1081') {
+//         width: 100%;
+//         background-color: darkred;
+//     }
+
+//     @include content-width('brk_900') {
+//         padding-left: 1rem;
+//         padding-right: 1rem;
+//         background-color: green;
+//     }
+
+//    @include content-width('brk_767') {
+//         width: 100%;
+//         background-color: blue;
+//     }
+
+// }
+
