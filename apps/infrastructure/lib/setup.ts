@@ -372,5 +372,9 @@ export class SetupStack extends cdk.Stack {
     // exportName = buildConfig.Prefix + "-deploy-arn" 
     // new cdk.CfnOutput(this, exportName, { value: deployBucket.bucketArn, exportName }); 
 
+
+    let exportName = buildConfig.Prefix + "-database-deployment-bucket-name" 
+    new cdk.CfnOutput(this, exportName, { value: deploymentBucket.bucketName, exportName }); 
+    
   }
 }
