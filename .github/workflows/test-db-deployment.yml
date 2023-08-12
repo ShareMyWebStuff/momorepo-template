@@ -41,10 +41,10 @@ jobs:
         run: |
             cd apps/infrastructure
             cdk deploy -c env=dev --require-approval never  
-      - name: Copy files to the test website with the AWS CLI
-        run: |
-          cd apps/database
-          aws s3 sync . s3://cameronguy-biz-deployment
+      # - name: Copy files to the test website with the AWS CLI
+      #   run: |
+      #     cd apps/database
+      #     aws s3 sync . s3://cameronguy-biz-deployment
     #   - name: Configure AWS credentials from Production account
     #     uses: aws-actions/configure-aws-credentials@v2
     #     with:
