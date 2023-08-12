@@ -16,31 +16,31 @@ export class SetupStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: cdk.StackProps, buildConfig: BuildConfig) {
     super(scope, id, props);
 
-    const deploymentBucketName = buildConfig.Prefix + "-deployment"
-    const deploymentBucket = new s3.Bucket(this, deploymentBucketName, {
-      bucketName: deploymentBucketName,
-      objectOwnership: s3.ObjectOwnership.BUCKET_OWNER_ENFORCED,
-      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ACLS,
-      accessControl: s3.BucketAccessControl.BUCKET_OWNER_FULL_CONTROL,
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
-      autoDeleteObjects: true,
-      versioned: false,
-      publicReadAccess: false,
-      encryption: s3.BucketEncryption.S3_MANAGED,
-      cors: [
-        {
-          allowedMethods: [
-            s3.HttpMethods.GET,
-            s3.HttpMethods.POST,
-            s3.HttpMethods.PUT,
-            s3.HttpMethods.DELETE,
-          ],
-          allowedOrigins: [buildConfig.CorsServer, `https://${buildConfig.DomainName}`],
-          // allowedOrigins: ['http://localhost:3000'],
-          allowedHeaders: ['*'],
-        },
-      ],
-    });
+    // const deploymentBucketName = buildConfig.Prefix + "-deployment"
+    // const deploymentBucket = new s3.Bucket(this, deploymentBucketName, {
+    //   bucketName: deploymentBucketName,
+    //   objectOwnership: s3.ObjectOwnership.BUCKET_OWNER_ENFORCED,
+    //   blockPublicAccess: s3.BlockPublicAccess.BLOCK_ACLS,
+    //   accessControl: s3.BucketAccessControl.BUCKET_OWNER_FULL_CONTROL,
+    //   removalPolicy: cdk.RemovalPolicy.DESTROY,
+    //   autoDeleteObjects: true,
+    //   versioned: false,
+    //   publicReadAccess: false,
+    //   encryption: s3.BucketEncryption.S3_MANAGED,
+    //   cors: [
+    //     {
+    //       allowedMethods: [
+    //         s3.HttpMethods.GET,
+    //         s3.HttpMethods.POST,
+    //         s3.HttpMethods.PUT,
+    //         s3.HttpMethods.DELETE,
+    //       ],
+    //       allowedOrigins: [buildConfig.CorsServer, `https://${buildConfig.DomainName}`],
+    //       // allowedOrigins: ['http://localhost:3000'],
+    //       allowedHeaders: ['*'],
+    //     },
+    //   ],
+    // });
 
 
     // // This probably will not be used in the general stack
@@ -372,9 +372,34 @@ export class SetupStack extends cdk.Stack {
     // exportName = buildConfig.Prefix + "-deploy-arn" 
     // new cdk.CfnOutput(this, exportName, { value: deployBucket.bucketArn, exportName }); 
 
+    // const deploymentBucketName = buildConfig.Prefix + "-deployment"
+    // const deploymentBucket = new s3.Bucket(this, deploymentBucketName, {
+    //   bucketName: deploymentBucketName,
+    //   objectOwnership: s3.ObjectOwnership.BUCKET_OWNER_ENFORCED,
+    //   blockPublicAccess: s3.BlockPublicAccess.BLOCK_ACLS,
+    //   accessControl: s3.BucketAccessControl.BUCKET_OWNER_FULL_CONTROL,
+    //   removalPolicy: cdk.RemovalPolicy.DESTROY,
+    //   autoDeleteObjects: true,
+    //   versioned: false,
+    //   publicReadAccess: false,
+    //   encryption: s3.BucketEncryption.S3_MANAGED,
+    //   cors: [
+    //     {
+    //       allowedMethods: [
+    //         s3.HttpMethods.GET,
+    //         s3.HttpMethods.POST,
+    //         s3.HttpMethods.PUT,
+    //         s3.HttpMethods.DELETE,
+    //       ],
+    //       allowedOrigins: [buildConfig.CorsServer, `https://${buildConfig.DomainName}`],
+    //       // allowedOrigins: ['http://localhost:3000'],
+    //       allowedHeaders: ['*'],
+    //     },
+    //   ],
+    // });
 
-    let exportName = buildConfig.Prefix + "-database-deployment-bucket-name" 
-    new cdk.CfnOutput(this, exportName, { value: deploymentBucket.bucketName, exportName }); 
+    // let exportName = buildConfig.Prefix + "-database-deployment-bucket-name" 
+    // new cdk.CfnOutput(this, exportName, { value: deploymentBucket.bucketName, exportName }); 
     
   }
 }
