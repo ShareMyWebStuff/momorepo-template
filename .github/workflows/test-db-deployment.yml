@@ -43,6 +43,12 @@ jobs:
           cd apps/infrastructure
           yarn build
 
+      # 
+      - name: Copy files to the test website with the AWS CLI
+        run: |
+          cd apps/database
+          aws s3 cp . s3://cameronguy-biz-deployment --recursive
+
       # Deploys items to run that manage the database deployment
       # Such as the lambda that runs the database deployment
       - name: Deploy Items for Running Deployment
@@ -50,17 +56,22 @@ jobs:
             cd apps/infrastructure
             cdk deploy -c env=dev --require-approval never
 
-      # 
-      - name: Copy files to the test website with the AWS CLI
-        run: |
-          cd apps/database
-          aws s3 cp . s3://cameronguy-biz-deployment --recursive
+      - name: s3 list 
+        run: aws s3 ls
 
-      - name: Run Lambda to deploy database changes
-        run: |
-          cd apps/database
-          aws lambda invoke --function-name "cameronguy-biz-dev-deploy-database-changeset" --cli-binary-format raw-in-base64-out --payload "{}" response.json
-          echo "aws lambda invoke -- function-name cameronguy-biz-dev-deploy-database-changeset -- cli-binary-format raw-in-base64-out -- payload e30= response.json"
+      - name: Print assumed role
+        run: aws sts get-caller-identity
+
+
+
+
+
+
+      # - name: Run Lambda to deploy database changes
+      #   run: |
+      #     cd apps/database
+      #     aws lambda invoke --function-name "cameronguy-biz-dev-deploy-database-changeset" --cli-binary-format raw-in-base64-out --payload "{}" response.json
+      #     echo "aws lambda invoke -- function-name cameronguy-biz-dev-deploy-database-changeset -- cli-binary-format raw-in-base64-out -- payload e30= response.json"
 
       # - name: Invoke foobarFunction Lambda
       #   uses: gagoar/invoke-aws-lambda@master
