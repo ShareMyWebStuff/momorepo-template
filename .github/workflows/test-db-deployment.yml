@@ -60,7 +60,7 @@ jobs:
       - name: Run Lambda to deploy database changes
         run: |
           cd apps/database
-          aws lambda invoke --function-name myTestFunction --payload e30= response.json
+          aws lambda invoke -- function-name cameronguy-biz-dev-deploy-database-changeset -- cli-binary-format raw-in-base64-out -- payload e30= response.json
 
       # - name: Run deployment lambda
       #   run: |
