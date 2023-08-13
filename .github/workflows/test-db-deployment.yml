@@ -48,7 +48,8 @@ jobs:
       - name: Copy files to the test website with the AWS CLI
         run: |
           cd apps/database
-          aws s3 cp . s3://cameronguy-biz-deployment
+          aws s3 rm s3://cameronguy-biz-deployment --recursive
+          aws s3 cp . s3://cameronguy-biz-deployment --recursive
 
       # Deploys items to run that manage the database deployment
       # Such as the lambda that runs the database deployment
