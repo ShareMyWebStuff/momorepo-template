@@ -16,35 +16,52 @@ jobs:
       permissions:
         id-token: write
         contents: read
+
       steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Setup Node
         uses: actions/setup-node@v2-beta
         with:
           node-version: '18'
+
       - name: Install packages
         run: |
           yarn install
+
       - name: Install dependencies
         run: npm install -g aws-cdk
+
       - name: Configure AWS credentials from Test account
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: arn:aws:iam::216211142709:role/AWSOpenIdRole
           aws-region: us-west-2
-      - name: Build
+
+      - name: Run build
         run: |
           cd apps/infrastructure
           yarn build
-      - name: Run database deployment lambda function
+
+      # Deploys items to run that manage the database deployment
+      # Such as the lambda that runs the database deployment
+      - name: Deploy Items for Running Deployment
         run: |
             cd apps/infrastructure
-            cdk deploy -c env=dev --require-approval never  
+            cdk deploy -c env=dev --require-approval never
+
+      # 
       - name: Copy files to the test website with the AWS CLI
         run: |
           cd apps/database
           aws s3 sync . s3://cameronguy-biz-deployment
+
+      - name: Run Lambda to deploy database changes
+        run: |
+          cd apps/database
+          aws lambda invoke --function-name myTestFunction --payload e30= response.json
+
       # - name: Run deployment lambda
       #   run: |
       #     cd apps/database
