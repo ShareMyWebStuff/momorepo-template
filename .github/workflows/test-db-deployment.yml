@@ -55,11 +55,12 @@ jobs:
       - name: Copy files to the test website with the AWS CLI
         run: |
           cd apps/database
-          aws s3 sync . s3://cameronguy-biz-deployment
+          aws s3 sync ./* s3://cameronguy-biz-deployment
 
       - name: Run Lambda to deploy database changes
         run: |
           cd apps/database
+          echo "aws lambda invoke -- function-name cameronguy-biz-dev-deploy-database-changeset -- cli-binary-format raw-in-base64-out -- payload e30= response.json"
           aws lambda invoke -- function-name cameronguy-biz-dev-deploy-database-changeset -- cli-binary-format raw-in-base64-out -- payload e30= response.json
 
       # - name: Run deployment lambda
