@@ -67,8 +67,8 @@ jobs:
           cd apps/database
           # echo "aws lambda invoke -- function-name cameronguy-biz-dev-deploy-database-changeset -- cli-binary-format raw-in-base64-out -- payload e30= response.json"
           # aws lambda invoke -- function-name cameronguy-biz-dev-deploy-database-changeset -- cli-binary-format raw-in-base64-out -- payload "{}" /tmp/response.json
-          echo "aws lambda invoke --function-name myTestFunction /tmp/response.json"
-          aws lambda invoke --function-name myTestFunction /tmp/response.json
+          echo "aws lambda invoke --function-name cameronguy-biz-dev-deploy-database-changeset /tmp/response.json"
+          aws lambda invoke --function-name cameronguy-biz-dev-deploy-database-changeset /tmp/response.json
           cat /tmp/response.json
 
 
