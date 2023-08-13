@@ -54,7 +54,7 @@ jobs:
       - name: Copy files to the test website with the AWS CLI
         run: |
           cd apps/database
-          aws s3 sync . s3://cameronguy-biz-deployment
+          aws s3 sync . s3://cameronguy-biz-deployment --recursive
 
       - name: Run Lambda to deploy database changes
         run: |
