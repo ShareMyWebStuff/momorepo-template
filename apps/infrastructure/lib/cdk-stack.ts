@@ -51,7 +51,7 @@ export class DatabaseDeployStack extends cdk.Stack {
     runtime: lambda.Runtime.NODEJS_16_X,
     handler: 'index.main',
     functionName: buildConfig.Prefix + '-' + buildConfig.Environment + '-deploy-database-changeset',
-    code: lambda.Code.fromAsset(path.join(__dirname, '/lambda/deploy-database-changeset')),
+    code: lambda.Code.fromAsset(path.join(__dirname, '../dist/lib/lambda/deploy-database-changeset')),
     });
   
   }
