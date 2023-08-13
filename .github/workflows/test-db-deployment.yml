@@ -33,10 +33,10 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::216211142709:role/AWSOpenIdRole
           aws-region: us-west-2
-      # - name: Run cdk
-      #   run: |
-      #       cd apps/infrastructure
-      #       cdk deploy -c env=dev --require-approval never
+      - name: Build
+        run: |
+          cd apps/infrastructure
+          yarn build
       - name: Run database deployment lambda function
         run: |
             cd apps/infrastructure
@@ -45,10 +45,10 @@ jobs:
         run: |
           cd apps/database
           aws s3 sync . s3://cameronguy-biz-deployment
-      - name: Run deployment lambda
-        run: |
-          cd apps/database
-          aws s3 sync . s3://cameronguy-biz-deployment
+      # - name: Run deployment lambda
+      #   run: |
+      #     cd apps/database
+      #     aws s3 sync . s3://cameronguy-biz-deployment
       #   - name: Configure AWS credentials from Production account
     #     uses: aws-actions/configure-aws-credentials@v2
     #     with:
