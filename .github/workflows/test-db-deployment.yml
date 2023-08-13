@@ -63,12 +63,14 @@ jobs:
         run: aws sts get-caller-identity
 
       - name: Run Lambda to deploy database changes
+        id: run-lambda
         run: |
           cd apps/database
           aws lambda invoke --function-name cameronguy-biz-dev-deploy-database-changeset /tmp/response.json
           # echo "Checking output"
           # cat /tmp/response.json
-          echo "${{ toJSON(github) }}"
+          echo steps.run-lambda.outputs
+          # echo "${{ toJSON(github) }}"
 
       # - name: Run Lambda to deploy database changes
       #   run: |
