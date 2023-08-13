@@ -49,7 +49,6 @@ jobs:
         run: |
           cd apps/database
           aws s3 cp . s3://cameronguy-biz-deployment
-          aws s3 cp ./functions s3://cameronguy-biz-deployment
 
       # Deploys items to run that manage the database deployment
       # Such as the lambda that runs the database deployment
