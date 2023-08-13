@@ -2,7 +2,7 @@
 import { APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda';
 // import { Client } from 'pg'
 
-export async function main(event: APIGatewayEvent): Promise<APIGatewayProxyResult> {
+export async function main(event: APIGatewayEvent): Promise<boolean> {
 
   // // get the secret from secrets manager.
   // const client = new SecretsManagerClient({})
@@ -34,14 +34,16 @@ export async function main(event: APIGatewayEvent): Promise<APIGatewayProxyResul
 
   console.log ("Hello World");
 
-  return {
-    body: JSON.stringify({
-      message: `Successfully run lambda at ${new Date().toISOString()}`,
-    }),
-    statusCode: 200,
-    isBase64Encoded: false,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }
+  return true;
+
+  // return {
+  //   body: JSON.stringify({
+  //     message: `Successfully run lambda at ${new Date().toISOString()}`,
+  //   }),
+  //   statusCode: 200,
+  //   isBase64Encoded: false,
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  // }
 }
