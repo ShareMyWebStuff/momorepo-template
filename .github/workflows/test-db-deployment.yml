@@ -62,6 +62,12 @@ jobs:
       - name: Print assumed role
         run: aws sts get-caller-identity
 
+      - name: Run Lambda to deploy database changes
+        run: |
+          cd apps/database
+          echo "aws lambda invoke -- function-name cameronguy-biz-dev-deploy-database-changeset -- cli-binary-format raw-in-base64-out -- payload e30= response.json"
+          aws lambda invoke -- function-name cameronguy-biz-dev-deploy-database-changeset -- cli-binary-format raw-in-base64-out -- payload e30= /tmp/response.json
+          cat /tmp/response.json
 
 
 
