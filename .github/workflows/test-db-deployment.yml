@@ -38,6 +38,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::216211142709:role/AWSOpenIdRole
           aws-region: eu-west-2
+
       - name: Run build
         run: |
           cd apps/infrastructure
@@ -47,29 +48,25 @@ jobs:
       - name: Copy files to the test website with the AWS CLI
         run: |
           cd apps/database
-          aws s3 cp . s3://cameronguy-biz-deployment --recursive
+          aws s3 cp . s3://cameronguy-biz-deployment
+          aws s3 cp ./functions s3://cameronguy-biz-deployment
 
       # Deploys items to run that manage the database deployment
       # Such as the lambda that runs the database deployment
-      - name: Deploy Items for Running Deployment
+      - name: Deploy Infrastructure Creation Helpers
         run: |
             cd apps/infrastructure
             cdk deploy -c env=dev --require-approval never
-
-      - name: s3 list 
-        run: aws s3 ls
-
-      - name: Print assumed role
-        run: aws sts get-caller-identity
 
       - name: Run Lambda to deploy database changes
         id: run-lambda
         run: |
           cd apps/database
           aws lambda invoke --function-name cameronguy-biz-dev-deploy-database-changeset /tmp/response.json
+          echo $?
           # echo "Checking output"
           # cat /tmp/response.json
-          echo steps.run-lambda.outputs
+          # echo steps.run-lambda.outputs
           # echo "${{ toJSON(github) }}"
 
       # - name: Run Lambda to deploy database changes
