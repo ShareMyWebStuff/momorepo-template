@@ -38,7 +38,6 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::216211142709:role/AWSOpenIdRole
           aws-region: us-west-2
-
       - name: Run build
         run: |
           cd apps/infrastructure
@@ -57,11 +56,17 @@ jobs:
           cd apps/database
           aws s3 sync . s3://cameronguy-biz-deployment
 
-      - name: Invoke foobarFunction Lambda
-        uses: gagoar/invoke-aws-lambda@master
-        with:
-          FunctionName: cameronguy-biz-dev-deploy-database-changeset
-          Payload: '{ "myParameter": false }'
+      - name: Run Lambda to deploy database changes
+        run: |
+          cd apps/database
+          echo "aws lambda invoke -- function-name cameronguy-biz-dev-deploy-database-changeset -- cli-binary-format raw-in-base64-out -- payload e30= response.json"
+          aws lambda invoke -- function-name cameronguy-biz-dev-deploy-database-changeset -- cli-binary-format raw-in-base64-out -- payload e30= response.json
+
+      # - name: Invoke foobarFunction Lambda
+      #   uses: gagoar/invoke-aws-lambda@master
+      #   with:
+      #     FunctionName: cameronguy-biz-dev-deploy-database-changeset
+      #     Payload: '{ "myParameter": false }'
 
       # - name: Run Lambda to deploy database changes
       #   run: |
