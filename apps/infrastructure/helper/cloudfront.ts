@@ -1,10 +1,11 @@
 import { Stack, aws_route53_targets } from 'aws-cdk-lib';
 import * as S3 from 'aws-cdk-lib/aws-s3';
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
+import { RecordTarget } from 'aws-cdk-lib/aws-route53';
 import * as origins from 'aws-cdk-lib/aws-cloudfront-origins';
 import {BuildConfig} from '../lib/build-config'
 import * as path from 'path';
-import { setRoute53Alias } from './route53'
+import { setCloudfrontRoute53Alias } from './route53'
 
 /**
  * Create cloudfront function
@@ -88,11 +89,26 @@ export const createCloudfront = (scope: Stack, buildConfig: BuildConfig, env: 'd
             responsePagePath: '/404.html',
           },
         ],
-      });
+    });
       
-      const cfTarget = new aws_route53_targets.CloudFrontTarget(cf);
+    const cfTarget = new aws_route53_targets.CloudFrontTarget(cf);
 
-      setRoute53Alias ( scope, buildConfig, (env === 'prd' ? '' : env), cfTarget)
+    // setRoute53Alias ( scope, buildConfig, (env === 'prd' ? '' : env), cfTarget)
+    // setRoute53Alias ( scope, buildConfig.hostedZone!, buildConfig.Prefix + `-cf-route53-${env}`, env + buildConfig.DomainName, RecordTarget.fromAlias( cfTarget ) )
+
+    setCloudfrontRoute53Alias (scope, buildConfig.hostedZone!, buildConfig.Prefix + `-cf-route53-${env}`, `${env}.${buildConfig.DomainName}`, cfTarget )
+    //   new cdk.aws_route53.ARecord(this, 'Dev Alias Cloudfront', {
+    //     zone: hostedZone,
+    //     recordName: 'dev.'+buildConfig.DomainName,
+    //     target: cdk.aws_route53.RecordTarget.fromAlias( cfDevTarget ),
+    //   });
+    
+
+//   new cdk.aws_route53.ARecord(this, 'Dev Alias Cloudfront', {
+//     zone: hostedZone,
+//     recordName: 'dev.'+buildConfig.DomainName,
+//     target: cdk.aws_route53.RecordTarget.fromAlias( cfDevTarget ),
+//   });
 
     return cf;
 }

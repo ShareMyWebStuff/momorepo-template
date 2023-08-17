@@ -13,6 +13,7 @@ jobs:
   build-website:
     runs-on: ubuntu-latest
     steps:
+
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Node
@@ -29,6 +30,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::216211142709:role/AWSOpenIdRole
           aws-region: us-west-2
+
       - name: Build
         run: |
           cd apps/infrastructure

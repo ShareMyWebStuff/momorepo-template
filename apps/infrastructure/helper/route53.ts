@@ -1,6 +1,6 @@
 import { Stack } from 'aws-cdk-lib';
 import { ARecord, RecordTarget, IHostedZone } from 'aws-cdk-lib/aws-route53';
-import { ApiGatewayDomain } from 'aws-cdk-lib/aws-route53-targets';
+import { ApiGatewayDomain, CloudFrontTarget } from 'aws-cdk-lib/aws-route53-targets';
 import { Certificate } from 'aws-cdk-lib/aws-certificatemanager';
 import { EndpointType, SecurityPolicy, DomainName } from 'aws-cdk-lib/aws-apigateway';
 
@@ -40,3 +40,11 @@ export const setRoute53Alias = (scope: Stack, hostedZone: IHostedZone, route53Su
     });
 }
 
+export const setCloudfrontRoute53Alias = (scope: Stack, hostedZone: IHostedZone, route53SubDomainId: string, recordName: string, cfTarget: CloudFrontTarget ) => {
+
+    return new ARecord(scope, route53SubDomainId, {
+        zone: hostedZone,
+        recordName: recordName,
+        target: RecordTarget.fromAlias( cfTarget )
+    });
+}
