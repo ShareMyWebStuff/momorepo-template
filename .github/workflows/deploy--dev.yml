@@ -46,7 +46,7 @@ jobs:
 
     - name: Run cdk
       run: |
-          cd apps/base-infrastructure
+          cd apps/infrastructure
           cdk deploy -c setup=true --require-approval never
 
       # - name: Checkout
