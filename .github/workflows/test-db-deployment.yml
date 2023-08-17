@@ -52,17 +52,17 @@ jobs:
 
       # Deploys items to run that manage the database deployment
       # Such as the lambda that runs the database deployment
-      - name: Deploy Infrastructure Creation Helpers
-        run: |
-            cd apps/infrastructure
-            cdk deploy -c env=dev --require-approval never
+      # - name: Deploy Infrastructure Creation Helpers
+      #   run: |
+      #       cd apps/infrastructure
+      #       cdk deploy -c env=dev --require-approval never
 
-      - name: Run Lambda to deploy database changes
-        id: run-lambda
-        run: |
-          cd apps/database
-          aws lambda invoke --function-name cameronguy-biz-dev-deploy-database-changeset /tmp/response.json
-          echo $?
+      # - name: Run Lambda to deploy database changes
+      #   id: run-lambda
+      #   run: |
+      #     cd apps/database
+      #     aws lambda invoke --function-name cameronguy-biz-dev-deploy-database-changeset /tmp/response.json
+      #     echo $?
 
 
       # - name: Run Lambda to deploy database changes
