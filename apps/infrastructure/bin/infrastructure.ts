@@ -8,8 +8,8 @@ import * as path from 'path'
 import * as s3 from 'aws-cdk-lib/aws-s3';
 
 // import { CdkStack } from '../lib/cdk-stack';
-import { SetupStack } from '../lib/setup';
-import { DatabaseDeployStack } from '../lib/cdk-stack';
+import { SetupStack } from '../lib/setup-stack';
+import { DatabaseDeployStack } from '../lib/database-stack';
 // import { VPCStack } from '../lib/create-vpc';
 
 
@@ -34,6 +34,11 @@ const ensureString: (object: { [name: string]: any }, propName: string)=>string 
 }
 
 
+/**
+ * Sets up the build config
+ * 
+ * @returns 
+ */
 const getConfig = () => {
 
   // Check the config parameter is set
@@ -51,6 +56,12 @@ const getConfig = () => {
   console.log (JSON.stringify(unparsedEnv))
 
   let buildConfig: BuildConfig = {
+    hostedZone: null,
+    cloudfrontCert: null,
+    cfDevBucket: null,
+    cfStgBucket: null,
+    cfPrdBucket: null,
+    CertificateARN: ensureString(unparsedEnv as object, 'CertificateARN'),
     RunSetup: (!setup ? false: true),
     Environment: env,
 
@@ -90,7 +101,7 @@ const main = async () => {
   // Create initial stack of items we need for all environments
   if ( buildConfig.RunSetup){
     let initialStackName = buildConfig.Prefix + '-setup'
-    const mainStack = new SetupStack( app, initialStackName, stackProps, buildConfig)
+    const mainStack = new SetupStack( app, initialStackName, buildConfig, stackProps)
   }
 
   if ( ['dev', 'stg', 'prd'].includes(buildConfig.Environment) ){

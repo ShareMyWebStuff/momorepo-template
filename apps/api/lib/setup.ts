@@ -16,39 +16,19 @@ export class SetupStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: cdk.StackProps, buildConfig: BuildConfig) {
     super(scope, id, props);
 
-    // This probably will not be used in the general stack
-    // const isProd = buildConfig.Environment === 'prod'
-
     // Get the hosted zone
     const hostedZone = HostedZone.fromLookup(this, "HostedZone", {
       domainName: buildConfig.DomainName
     })
 
-    // // Create the certificate
+    // Create the certificate
     const certificate = new cm.Certificate (this, "Certificate", {
       certificateName: buildConfig.Prefix + '-certificate',
       domainName: buildConfig.DomainName,
       subjectAlternativeNames: [`*.${buildConfig.DomainName}`],
       validation: cm.CertificateValidation.fromDns(hostedZone)
     })
-
-    // const exampleCom = new route53.HostedZone(this, 'ExampleCom', {
-    //   zoneName: 'example.com',
-    // });
-    // const exampleNet = new route53.HostedZone(this, 'ExampleNet', {
-    //   zoneName: 'example.net',
-    // });
     
-    // const cert = new acm.Certificate(this, 'Certificate', {
-    //   domainName: 'test.example.com',
-    //   subjectAlternativeNames: ['cool.example.com', 'test.example.net'],
-    //   validation: acm.CertificateValidation.fromDnsMultiZone({
-    //     'test.example.com': exampleCom,
-    //     'cool.example.com': exampleCom,
-    //     'test.example.net': exampleNet,
-    //   }),
-    // });
-
     // Create the subdomains
     const devApiDomain = new cdk.aws_apigateway.DomainName(this, buildConfig.Prefix  + '-domain-api-dev', {
       domainName: 'api-dev.' + buildConfig.DomainName,
@@ -90,7 +70,7 @@ export class SetupStack extends cdk.Stack {
     })
 
     //  Create buckets
-    // removalPolicy - DESTRY FOR PRE PROD, RETAIN FOR PROD
+    // removalPolicy - DESTROY FOR PRE PROD, RETAIN FOR PROD
     // autoDeleteObjects : set to true for pre prod as we do not want to keep these objects
     const devPrivateUploadBucketName = buildConfig.Prefix + "-dev-upload-private"
     const devPrivateUploadBucket = new s3.Bucket(this, devPrivateUploadBucketName, {
