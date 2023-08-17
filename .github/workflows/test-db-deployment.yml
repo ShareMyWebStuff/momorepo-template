@@ -44,11 +44,11 @@ jobs:
           cd apps/infrastructure
           yarn build
 
-      # 
-      - name: Copy files to the test website with the AWS CLI
-        run: |
-          aws s3 rm s3://cameronguy-biz-deployment --recursive
-          aws s3 cp apps/database s3://cameronguy-biz-deployment --recursive
+      # # 
+      # - name: Copy files to the test website with the AWS CLI
+      #   run: |
+      #     aws s3 rm s3://cameronguy-biz-deployment --recursive
+      #     aws s3 cp apps/database s3://cameronguy-biz-deployment --recursive
 
       # Deploys items to run that manage the database deployment
       # Such as the lambda that runs the database deployment
