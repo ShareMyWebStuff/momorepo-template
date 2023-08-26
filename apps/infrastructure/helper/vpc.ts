@@ -34,7 +34,7 @@ export const createVPC = ( scope: Stack, buildConfig: BuildConfig ) => {
         ipAddresses: IpAddresses.cidr('10.1.0.0/16'),
         defaultInstanceTenancy: DefaultInstanceTenancy.DEFAULT,
         maxAzs: 2,
-        natGateways: 0, // May need to put this to 1 later
+        // natGateways: 0, // May need to put this to 1 later
         // natGateways: 1,
         // maxAzs: 3,
         subnetConfiguration: [
@@ -46,7 +46,8 @@ export const createVPC = ( scope: Stack, buildConfig: BuildConfig ) => {
           {
             name: buildConfig.Prefix + '-' + buildConfig.Environment + '-lambda',
             cidrMask: 24,
-            subnetType: SubnetType.PRIVATE_ISOLATED
+            // subnetType: SubnetType.PRIVATE_ISOLATED,
+            subnetType: SubnetType.PRIVATE_WITH_EGRESS
           },
           {
             name: buildConfig.Prefix + '-' + buildConfig.Environment + '-database',

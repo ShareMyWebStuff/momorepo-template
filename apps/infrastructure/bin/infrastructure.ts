@@ -2,7 +2,7 @@
 // import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
 import * as yaml from 'js-yaml'
-import {BuildConfig} from '../lib/build-config'
+import {BuildConfig, Stage} from '../lib/build-config'
 import * as fs from 'fs'
 import * as path from 'path'
 import * as s3 from 'aws-cdk-lib/aws-s3';
@@ -40,17 +40,34 @@ const ensureString: (object: { [name: string]: any }, propName: string)=>string 
  * @returns 
  */
 const getConfig = () => {
+  let environmentId: number;
 
   // Check the config parameter is set
   let setup = app.node.tryGetContext('setup')
   let env = app.node.tryGetContext('env')
   console.log ('Env')
   console.log (env)
+
   // 
   if (( !setup && !env ) || (setup && ['dev', 'stg', 'prd'].includes(env))){
     throw new Error("Need to pass in either `-c setup=true` or `-c env=dev|stg|prd`")
     process.exit(1)
   } 
+
+  switch (env){
+    case'dev': 
+      environmentId = Stage.Dev;
+      break;
+    case'stg': 
+      environmentId = Stage.Stage;
+      break;
+    case'prd': 
+      environmentId = Stage.Production;
+      break;
+    default:
+      // Should never be reached
+      environmentId = Stage.Dev;
+  }
 
   let unparsedEnv = yaml.load(fs.readFileSync(path.resolve("./config/"+(!env?'setup':env)+'.yaml'), "utf8"))
   console.log (JSON.stringify(unparsedEnv))
@@ -61,9 +78,16 @@ const getConfig = () => {
     cfDevBucket: null,
     cfStgBucket: null,
     cfPrdBucket: null,
+    databaseSG: [],
+    lambdaSG: [],
+    frontendSG: [],
+    deployBucket: [],
+
+    vpc: null,
     CertificateARN: ensureString(unparsedEnv as object, 'CertificateARN'),
     RunSetup: (!setup ? false: true),
     Environment: env,
+    EnvironmentId: environmentId,
 
     AWSAccountID: ensureString(unparsedEnv as object, 'AWSAccountID'),
     AWSProfileName: ensureString(unparsedEnv as object, 'AWSProfileName'),

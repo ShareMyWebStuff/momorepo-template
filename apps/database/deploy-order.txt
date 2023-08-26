@@ -1,0 +1,2 @@
+1   deploy-1.sql    N   Y
+2   deploy-2.sql    Y   Y

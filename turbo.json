@@ -2,7 +2,8 @@
     "$schema": "https://turborepo.org/schema.json",
     "pipeline": {
         "build": {
-            "cache": false
+            "cache": false,
+            "env": [ "DATABASE_SECRET_ARN", "DEPLOY_BUCKET_NAME" ]
         },
         "synth": {
             "cache": false
@@ -27,5 +28,6 @@
         "format": {
             "outputs": []
         } 
-    }
+    },
+    "globalEnv": ["DATABASE_SECRET_ARN", "DEPLOY_BUCKET_NAME"]
 }

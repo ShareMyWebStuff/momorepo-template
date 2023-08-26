@@ -1,7 +1,7 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as cm from 'aws-cdk-lib/aws-certificatemanager';
-import {BuildConfig} from './build-config'
+import {BuildConfig, Stage} from './build-config'
 import { HostedZone } from 'aws-cdk-lib/aws-route53';
 import { ApiGatewayDomain } from 'aws-cdk-lib/aws-route53-targets';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
@@ -39,11 +39,12 @@ export class SetupStack extends cdk.Stack {
     // Should have the same number of NATS as AZ - but can use one to keep the costs down
     // May need a different cidr per project and environment - 10.1.0.0/16
     // maxAzs 2
-    const vpc = createVPC (this, buildConfig);
+    buildConfig.vpc = createVPC (this, buildConfig);
 
     // Create the dev security groups
     let sgEnv = 'dev';
-    const devFrontendGS = createSecurityGroup(this, vpc, sgEnv, buildConfig.Prefix, {    
+    // const devFrontendGS
+    buildConfig.frontendSG.push ( createSecurityGroup(this, buildConfig.vpc, sgEnv, buildConfig.Prefix, {    
         secGrpName: buildConfig.Prefix + `-${sgEnv}-frontend-sg`,
         secGrpDesc: `${sgEnv} frontend security group`,
         ingress: [
@@ -51,27 +52,27 @@ export class SetupStack extends cdk.Stack {
           { peer: Peer.anyIpv6(), port: Port.tcp(80), description: `${sgEnv} frontend allowsI http access from anywhere` },
           { peer: Peer.anyIpv4(), port: Port.tcp(22), description: `${sgEnv} frontend allows SSH access from anywhere` },
         ]
-      } )
+      } ) )
 
-    const devLambdaGS = createSecurityGroup(this, vpc, sgEnv, buildConfig.Prefix, {    
+    buildConfig.lambdaSG.push ( createSecurityGroup(this, buildConfig.vpc, sgEnv, buildConfig.Prefix, {    
       secGrpName: buildConfig.Prefix + `-${sgEnv}-lambda-sg`,
       secGrpDesc: `${sgEnv} lambda security group`,
       ingress: [ ]
-    } )
+    } ) )
 
-    const devDatabaseGS = createSecurityGroup(this, vpc, sgEnv, buildConfig.Prefix, {    
+    buildConfig.databaseSG.push ( createSecurityGroup(this, buildConfig.vpc, sgEnv, buildConfig.Prefix, {    
       secGrpName: buildConfig.Prefix + `${sgEnv}-database-sg`,
       secGrpDesc: `${sgEnv} database security group`,
       ingress: [
-        { peer: devLambdaGS, port: Port.tcp(3306), description: `${sgEnv} lambda access to the database group` },
-        { peer: devFrontendGS, port: Port.tcp(3306), description: `${sgEnv} frontend access to the database group` },
+        { peer: buildConfig.lambdaSG[Stage.Dev], port: Port.tcp(3306), description: `${sgEnv} lambda access to the database group` },
+        { peer: buildConfig.frontendSG[Stage.Dev], port: Port.tcp(3306), description: `${sgEnv} frontend access to the database group` },
         { peer: null, port: Port.tcp(3306), description: `${sgEnv} loop back for database group` },
       ]
-    } )
+    } ) )
 
     // Create the stg security groups
     sgEnv = 'stg';
-    const stgFrontendGS = createSecurityGroup(this, vpc, sgEnv, buildConfig.Prefix, {    
+    buildConfig.frontendSG.push ( createSecurityGroup(this, buildConfig.vpc, sgEnv, buildConfig.Prefix, {    
         secGrpName: buildConfig.Prefix + `-${sgEnv}-frontend-sg`,
         secGrpDesc: `${sgEnv} frontend security group`,
         ingress: [
@@ -79,51 +80,51 @@ export class SetupStack extends cdk.Stack {
           { peer: Peer.anyIpv6(), port: Port.tcp(80), description: `${sgEnv} frontend allowsI http access from anywhere` },
           { peer: Peer.anyIpv4(), port: Port.tcp(22), description: `${sgEnv} frontend allows SSH access from anywhere` },
         ]
-      } )
+      } ) )
 
-    const stgLambdaGS = createSecurityGroup(this, vpc, sgEnv, buildConfig.Prefix, {    
+    buildConfig.lambdaSG.push ( createSecurityGroup(this,buildConfig.vpc, sgEnv, buildConfig.Prefix, {    
       secGrpName: buildConfig.Prefix + `-${sgEnv}-lambda-sg`,
       secGrpDesc: `${sgEnv} lambda security group`,
       ingress: [ ]
-    } )
+    } ) )
 
-    const stgDatabaseGS = createSecurityGroup(this, vpc, sgEnv, buildConfig.Prefix, {    
+    buildConfig.databaseSG.push ( createSecurityGroup(this, buildConfig.vpc, sgEnv, buildConfig.Prefix, {    
       secGrpName: buildConfig.Prefix + `${sgEnv}-database-sg`,
       secGrpDesc: `${sgEnv} database security group`,
       ingress: [
-        { peer: devLambdaGS, port: Port.tcp(3306), description: `${sgEnv} lambda access to the database group` },
-        { peer: devFrontendGS, port: Port.tcp(3306), description: `${sgEnv} frontend access to the database group` },
+        { peer: buildConfig.lambdaSG[Stage.Stage], port: Port.tcp(3306), description: `${sgEnv} lambda access to the database group` },
+        { peer: buildConfig.frontendSG[Stage.Stage], port: Port.tcp(3306), description: `${sgEnv} frontend access to the database group` },
         { peer: null, port: Port.tcp(3306), description: `${sgEnv} loop back for database group` },
       ]
-    } )
+    } ) )
 
     // Create the prd security groups
     sgEnv = 'prd';
-    const prdFrontendGS = createSecurityGroup(this, vpc, sgEnv, buildConfig.Prefix, {    
-        secGrpName: buildConfig.Prefix + `-${sgEnv}-frontend-sg`,
-        secGrpDesc: `${sgEnv} frontend security group`,
-        ingress: [
-          { peer: Peer.anyIpv4(), port: Port.tcp(80), description: `${sgEnv} frontend allows http access from anywhere` },
-          { peer: Peer.anyIpv6(), port: Port.tcp(80), description: `${sgEnv} frontend allowsI http access from anywhere` },
-          { peer: Peer.anyIpv4(), port: Port.tcp(22), description: `${sgEnv} frontend allows SSH access from anywhere` },
-        ]
-      } )
+    buildConfig.frontendSG.push ( createSecurityGroup(this, buildConfig.vpc, sgEnv, buildConfig.Prefix, {    
+      secGrpName: buildConfig.Prefix + `-${sgEnv}-frontend-sg`,
+      secGrpDesc: `${sgEnv} frontend security group`,
+      ingress: [
+        { peer: Peer.anyIpv4(), port: Port.tcp(80), description: `${sgEnv} frontend allows http access from anywhere` },
+        { peer: Peer.anyIpv6(), port: Port.tcp(80), description: `${sgEnv} frontend allowsI http access from anywhere` },
+        { peer: Peer.anyIpv4(), port: Port.tcp(22), description: `${sgEnv} frontend allows SSH access from anywhere` },
+      ]
+    } ) )
 
-    const prdLambdaGS = createSecurityGroup(this, vpc, sgEnv, buildConfig.Prefix, {    
+    buildConfig.lambdaSG.push ( createSecurityGroup(this, buildConfig.vpc, sgEnv, buildConfig.Prefix, {    
       secGrpName: buildConfig.Prefix + `-${sgEnv}-lambda-sg`,
       secGrpDesc: `${sgEnv} lambda security group`,
       ingress: [ ]
-    } )
+    } ) )
 
-    const prdDatabaseGS = createSecurityGroup(this, vpc, sgEnv, buildConfig.Prefix, {    
+    buildConfig.databaseSG.push ( createSecurityGroup(this, buildConfig.vpc, sgEnv, buildConfig.Prefix, {    
       secGrpName: buildConfig.Prefix + `${sgEnv}-database-sg`,
       secGrpDesc: `${sgEnv} database security group`,
       ingress: [
-        { peer: devLambdaGS, port: Port.tcp(3306), description: `${sgEnv} lambda access to the database group` },
-        { peer: devFrontendGS, port: Port.tcp(3306), description: `${sgEnv} frontend access to the database group` },
+        { peer: buildConfig.lambdaSG[Stage.Production], port: Port.tcp(3306), description: `${sgEnv} lambda access to the database group` },
+        { peer: buildConfig.frontendSG[Stage.Production], port: Port.tcp(3306), description: `${sgEnv} frontend access to the database group` },
         { peer: null, port: Port.tcp(3306), description: `${sgEnv} loop back for database group` },
       ]
-    } )
+    } ) )
 
     // Create the certificate for the api subdomains
     const certificate = new cm.Certificate (this, "Certificate", {
@@ -160,9 +161,10 @@ export class SetupStack extends cdk.Stack {
     createBucket (this, BucketType.PRIVATE, buildConfig.Prefix + "-upload", buildConfig )
     createBucket (this, BucketType.PUBLIC, buildConfig.Prefix + "-upload-private", buildConfig )
 
-    const devPrivateDatabaseDeploymentBucket = createBucket (this, BucketType.PRIVATE, buildConfig.Prefix + "-database-deploy-dev", buildConfig )
-    const stgPrivateDatabaseDeploymentBucket = createBucket (this, BucketType.PRIVATE, buildConfig.Prefix + "-database-deploy-stg", buildConfig )
-    const prdPrivateDatabaseDeploymentBucket = createBucket (this, BucketType.PRIVATE, buildConfig.Prefix + "-database-deploy", buildConfig )
+    buildConfig.deployBucket.push( createBucket (this, BucketType.PRIVATE, buildConfig.Prefix + "-database-deploy-dev", buildConfig ) )
+    buildConfig.deployBucket.push( createBucket (this, BucketType.PRIVATE, buildConfig.Prefix + "-database-deploy-stg", buildConfig ) )
+    buildConfig.deployBucket.push ( createBucket (this, BucketType.PRIVATE, buildConfig.Prefix + "-database-deploy", buildConfig ) )
+
 
     buildConfig.cfDevBucket = createBucket (this, BucketType.CLOUDFRONT_HOSTING, buildConfig.Prefix + "-cf-dev", buildConfig )
     buildConfig.cfStgBucket = createBucket (this, BucketType.CLOUDFRONT_HOSTING, buildConfig.Prefix + "-cf-stg", buildConfig )
@@ -199,31 +201,31 @@ export class SetupStack extends cdk.Stack {
 
     // VPC
     exportName = buildConfig.Prefix + '-' + '-vpc-arn'
-    new cdk.CfnOutput(this, exportName, { value: vpc.vpcArn, exportName }); 
+    new cdk.CfnOutput(this, exportName, { value: buildConfig.vpc.vpcArn, exportName }); 
     exportName = buildConfig.Prefix + '-' + '-vpc-id'
-    new cdk.CfnOutput(this, exportName, { value: vpc.vpcId, exportName });
+    new cdk.CfnOutput(this, exportName, { value: buildConfig.vpc.vpcId, exportName });
 
     // Security Groups
     exportName = buildConfig.Prefix + '-dev-public-sg-id'
-    new cdk.CfnOutput(this, exportName, { value: devFrontendGS.securityGroupId, exportName });
+    new cdk.CfnOutput(this, exportName, { value: buildConfig.frontendSG[Stage.Dev].securityGroupId, exportName });
     exportName = buildConfig.Prefix + '-dev-lambda-sg-id'
-    new cdk.CfnOutput(this, exportName, { value: devLambdaGS.securityGroupId, exportName });
+    new cdk.CfnOutput(this, exportName, { value: buildConfig.lambdaSG[Stage.Dev].securityGroupId, exportName });
     exportName = buildConfig.Prefix + '-dev-database-sg-id'
-    new cdk.CfnOutput(this, exportName, { value: devDatabaseGS.securityGroupId, exportName });
+    new cdk.CfnOutput(this, exportName, { value: buildConfig.databaseSG[Stage.Dev].securityGroupId, exportName });
 
     exportName = buildConfig.Prefix + '-stg-public-sg-id'
-    new cdk.CfnOutput(this, exportName, { value: stgFrontendGS.securityGroupId, exportName });
+    new cdk.CfnOutput(this, exportName, { value: buildConfig.frontendSG[Stage.Stage].securityGroupId, exportName });
     exportName = buildConfig.Prefix + '-stg-lambda-sg-id'
-    new cdk.CfnOutput(this, exportName, { value: stgLambdaGS.securityGroupId, exportName });
+    new cdk.CfnOutput(this, exportName, { value: buildConfig.lambdaSG[Stage.Stage].securityGroupId, exportName });
     exportName = buildConfig.Prefix + '-stg-database-sg-id'
-    new cdk.CfnOutput(this, exportName, { value: stgDatabaseGS.securityGroupId, exportName });
+    new cdk.CfnOutput(this, exportName, { value: buildConfig.databaseSG[Stage.Stage].securityGroupId, exportName });
 
     exportName = buildConfig.Prefix + '-prd-public-sg-id'
-    new cdk.CfnOutput(this, exportName, { value: prdFrontendGS.securityGroupId, exportName });
+    new cdk.CfnOutput(this, exportName, { value: buildConfig.frontendSG[Stage.Production].securityGroupId, exportName });
     exportName = buildConfig.Prefix + '-prd-lambda-sg-id'
-    new cdk.CfnOutput(this, exportName, { value: prdLambdaGS.securityGroupId, exportName });
+    new cdk.CfnOutput(this, exportName, { value: buildConfig.lambdaSG[Stage.Production].securityGroupId, exportName });
     exportName = buildConfig.Prefix + '-prd-database-sg-id'
-    new cdk.CfnOutput(this, exportName, { value: prdDatabaseGS.securityGroupId, exportName });
+    new cdk.CfnOutput(this, exportName, { value: buildConfig.databaseSG[Stage.Production].securityGroupId, exportName });
 
 
     // Cloudfront distributuion
@@ -259,19 +261,19 @@ export class SetupStack extends cdk.Stack {
     new cdk.CfnOutput(this, exportName, { value: buildConfig.cfPrdBucket.bucketArn, exportName }); 
 
     exportName = buildConfig.Prefix + "-db-deploy-bucket-dev-name" 
-    new cdk.CfnOutput(this, exportName, { value: devPrivateDatabaseDeploymentBucket.bucketName, exportName }); 
+    new cdk.CfnOutput(this, exportName, { value: buildConfig.deployBucket[Stage.Dev].bucketName, exportName }); 
     exportName = buildConfig.Prefix + "-db-deploy-bucket-dev-arn" 
-    new cdk.CfnOutput(this, exportName, { value: devPrivateDatabaseDeploymentBucket.bucketArn, exportName }); 
+    new cdk.CfnOutput(this, exportName, { value: buildConfig.deployBucket[Stage.Dev].bucketArn, exportName }); 
 
     exportName = buildConfig.Prefix + "-db-deploy-bucket-stg-name" 
-    new cdk.CfnOutput(this, exportName, { value: stgPrivateDatabaseDeploymentBucket.bucketName, exportName }); 
+    new cdk.CfnOutput(this, exportName, { value: buildConfig.deployBucket[Stage.Stage].bucketName, exportName }); 
     exportName = buildConfig.Prefix + "-db-deploy-bucket-stg-arn" 
-    new cdk.CfnOutput(this, exportName, { value: stgPrivateDatabaseDeploymentBucket.bucketArn, exportName }); 
+    new cdk.CfnOutput(this, exportName, { value: buildConfig.deployBucket[Stage.Stage].bucketArn, exportName }); 
 
     exportName = buildConfig.Prefix + "-db-deploy-bucket-prd-name" 
-    new cdk.CfnOutput(this, exportName, { value: prdPrivateDatabaseDeploymentBucket.bucketName, exportName }); 
+    new cdk.CfnOutput(this, exportName, { value: buildConfig.deployBucket[Stage.Production].bucketName, exportName }); 
     exportName = buildConfig.Prefix + "-db-deploy-bucket-prd-arn" 
-    new cdk.CfnOutput(this, exportName, { value: prdPrivateDatabaseDeploymentBucket.bucketArn, exportName }); 
+    new cdk.CfnOutput(this, exportName, { value: buildConfig.deployBucket[Stage.Production].bucketArn, exportName }); 
 
   }
 }
