@@ -2,6 +2,7 @@ import * as cdk from 'aws-cdk-lib';
 import { Duration, RemovalPolicy } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as apigateway from 'aws-cdk-lib/aws-apigateway';
+import { Vpc } from 'aws-cdk-lib/aws-ec2';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as ecr from 'aws-cdk-lib/aws-ecr';
 import * as s3 from 'aws-cdk-lib/aws-s3';
@@ -22,6 +23,11 @@ import { RetentionDays } from 'aws-cdk-lib/aws-logs';
 export class DatabaseDeployStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: cdk.StackProps, buildConfig: BuildConfig) {
     super(scope, id, props);
+
+    // const vpc = Vpc.fromLookup(this, buildConfig.Prefix + '-' + buildConfig.Environment + '-vpc-lookup', {
+    //   vpcName: buildConfig.Prefix + '-' + buildConfig.Environment + '-vpc',
+    // })
+
 
     // Check if this is a prod environment
     const isProd = buildConfig.Environment === 'prd'
@@ -63,7 +69,8 @@ export class DatabaseDeployStack extends cdk.Stack {
       vpc: buildConfig.vpc!,
       removalPolicy: RemovalPolicy.DESTROY,
       vpcSubnets: {
-        subnets: buildConfig.vpc!.isolatedSubnets,
+        // subnets: buildConfig.vpc!.isolatedSubnets,
+        // subnets: buildConfig.vpc!.selectSubnets({,
       },
     })
 

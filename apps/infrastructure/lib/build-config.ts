@@ -22,7 +22,7 @@ export interface BuildConfig {
     frontendSG: SecurityGroup[];
 
     readonly CertificateARN : string
-    readonly RunSetup : boolean
+    // readonly RunSetup : boolean
     readonly Environment : string
     readonly EnvironmentId : number
 

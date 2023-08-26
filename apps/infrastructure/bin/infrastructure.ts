@@ -43,16 +43,22 @@ const getConfig = () => {
   let environmentId: number;
 
   // Check the config parameter is set
-  let setup = app.node.tryGetContext('setup')
+  // let setup = app.node.tryGetContext('setup')
   let env = app.node.tryGetContext('env')
   console.log ('Env')
   console.log (env)
 
-  // 
-  if (( !setup && !env ) || (setup && ['dev', 'stg', 'prd'].includes(env))){
-    throw new Error("Need to pass in either `-c setup=true` or `-c env=dev|stg|prd`")
+  // Only allow the env to be set
+  if (!env || ( ['dev', 'stg', 'prd'].includes(env))){
+    throw new Error("Need to pass in either `-c env=dev|stg|prd`")
     process.exit(1)
   } 
+
+  // 
+  // if (( !setup && !env ) || (setup && ['dev', 'stg', 'prd'].includes(env))){
+  //   throw new Error("Need to pass in either `-c setup=true` or `-c env=dev|stg|prd`")
+  //   process.exit(1)
+  // } 
 
   switch (env){
     case'dev': 
@@ -85,7 +91,7 @@ const getConfig = () => {
 
     vpc: null,
     CertificateARN: ensureString(unparsedEnv as object, 'CertificateARN'),
-    RunSetup: (!setup ? false: true),
+    // RunSetup: (!setup ? false: true),
     Environment: env,
     EnvironmentId: environmentId,
 
@@ -123,10 +129,10 @@ const main = async () => {
   // const a =  s3.Bucket.fromBucketName(app, buildConfig.Prefix + '-dev-upload-private', buildConfig.Prefix + '-dev-upload-private)
 
   // Create initial stack of items we need for all environments
-  if ( buildConfig.RunSetup){
-    let initialStackName = buildConfig.Prefix + '-setup'
-    const mainStack = new SetupStack( app, initialStackName, buildConfig, stackProps)
-  }
+  // if ( buildConfig.RunSetup){
+  let initialStackName = buildConfig.Prefix + '-setup'
+  const mainStack = new SetupStack( app, initialStackName, buildConfig, stackProps)
+  // }
 
   if ( ['dev', 'stg', 'prd'].includes(buildConfig.Environment) ){
     let initialStackName = buildConfig.Prefix + "-" + buildConfig.Environment + '-database-deployment'
