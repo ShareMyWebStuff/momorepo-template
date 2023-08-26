@@ -46,8 +46,9 @@ const getConfig = () => {
   // let setup = app.node.tryGetContext('setup')
   let env = app.node.tryGetContext('env')
   console.log ('Env')
-  console.log (env)
-
+  console.log (`:::${env}:::`)
+  console.log (['dev', 'stg', 'prd'].includes(env))
+  console.log (!env)
   // Only allow the env to be set
   if (!env || ( ['dev', 'stg', 'prd'].includes(env))){
     throw new Error("Need to pass in `-c env=dev|stg|prd`")
