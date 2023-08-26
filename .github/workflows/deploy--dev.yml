@@ -52,7 +52,7 @@ jobs:
     - name: Run development cdk
       run: |
           cd apps/infrastructure
-          cdk deploy -c env=dev --require-approval --all never
+          cdk deploy -c env=dev --require-approval --all
     
       # - name: Checkout
       #   uses: actions/checkout@v3
