@@ -50,7 +50,7 @@ const getConfig = () => {
 
   // Only allow the env to be set
   if (!env || ( ['dev', 'stg', 'prd'].includes(env))){
-    throw new Error("Need to pass in either `-c env=dev|stg|prd`")
+    throw new Error("Need to pass in `-c env=dev|stg|prd`")
     process.exit(1)
   } 
 
